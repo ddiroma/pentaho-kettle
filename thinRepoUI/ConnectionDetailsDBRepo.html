@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="ThinRepoFlow.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('input').keyup(function() {
+
+        var empty = false;
+        $('input').each(function() {
+            if ($(this).val() == '') {
+                empty = true;
+            }
+        });
+
+        if (empty) {
+            $('#finish').attr('disabled', 'disabled'); 
+        } else {
+            $('#finish').removeAttr('disabled');
+        }
+    });
+});
+
+</script>
+</head>
+<body>
+	<div class="main_div">
+		<div class="title_text margin_bottom_30">Connection Details</div>
+		<div class="middle_div">
+			<div class="margin_bottom_15">
+				<label for="displayName" class="margin_bottom_5 block text_left">Display
+					Name</label> <input id="displayName" class="block" type="text" size="50" />
+			</div>
+			<div class="margin_bottom_15">
+				<label for="connectionDD" class="margin_bottom_5 block text_left">Database Connection</label>
+				<!-- Need to change the select arrow -->
+				<select id="connectionDD" class="block">
+					<option>None</option>
+					<option>DB1</option>
+					<option>DB2</option>
+				</select>
+			</div>
+			<div class="margin_bottom_20">
+				<label for="description" class="margin_bottom_5 block text_left">Description</label>
+				<textarea id="description" class="block" rows="4" cols="50"></textarea>
+			</div>
+			<div class="text_left">
+				<input id="makeDefault" type="checkbox"/><label for="makeDefault"> Make default-launch on startup</label>
+			</div>
+		</div>
+		<div class="bottom">
+		<div class="margin_bottom_20">
+			<hr />
+		</div>
+		<div>
+			<img class="left" alt="" src="images/u42.png" /><a
+				id="btnHelp" class="left" href="">Help</a>
+			<button id="finish" class="right margin_left_10 secondary" type="button" disabled="disabled">Finish</button>
+			<button class="right secondary" type="button">Back</button>
+		</div>
+		</div>
+	</div>
+</body>
+</html>

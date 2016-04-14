@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$(".db_list_items").click(function() {
+			$(".db_list_items").removeClass("active");
+			$(this).toggleClass("active");
+		});
+	});
+</script>
+<link rel="stylesheet" type="text/css" href="ThinRepoFlow.css" />
+</head>
+<body>
+	<div class="main_div">
+		<div class="title_text margin_bottom_30">Select a database
+			connection</div>
+		<div class="middle_div">
+			<div id="dbDiv" class="margin_bottom_20 text_left">
+				<!-- This div must be repeatable -->
+				<div class="db_list_items">Test DB 2</div>
+			</div>
+			<div>
+				<button id="delete" class="right margin_left_10 secondary"
+					type="button">Delete</button>
+				<button id="edit" class="right margin_left_10 secondary"
+					type="button">Edit</button>
+				<button id="new" class="right secondary" type="button">New</button>
+			</div>
+		</div>
+	</div>
+	<div class="bottom">
+		<div class="margin_bottom_20">
+			<hr />
+		</div>
+		<div>
+			<img class="left" alt="" src="images/u42.png" /><a id="btnHelp"
+				class="left" href="">Help</a>
+			<button class="right standard" type="button">Back</button>
+		</div>
+	</div>
+</body>
+</html>
