@@ -342,13 +342,11 @@ td button.activate {
 	color: #FFFFFF !important;
 }
 
-tr.active>td.repo_type>div:nth-child(1),
 tr.active>td.repo_type>div:nth-child(1) {
 	font-size: 24px;
 }
 
-tr:not(.active )>td.repo_type>div:nth-child(1),
-tr:not(.active )>td.repo_type>div:nth-child(1) {
+tr:not(.active)>td.repo_type>div:nth-child(1){
 	font-size: 24px;
 	color: #333333;
 }

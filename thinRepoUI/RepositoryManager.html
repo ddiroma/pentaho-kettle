@@ -21,7 +21,7 @@
 			function() {
 				$("#repoMngTable").children("tbody").children("tr").children(
 						"td").hover(function() {
-					if (!$(this.parentNode).hasClass("active"))
+					/* if (!$(this.parentNode).hasClass("active")) */
 						$(this.parentNode).toggleClass("hover");
 				});
 			});
@@ -39,7 +39,7 @@
 									.removeClass("hover");
 							$("#repoMngTable").children("tbody").children("tr")
 									.children("td.default").children(
-											".defaultBtn").html("Set Default");
+											".defaultBtn:not(.activate)").html("Set Default");
 							$(this.parentNode).toggleClass("active");
 							$("#editBtn, #deleteBtn").removeClass("hidden");
 						});
@@ -62,12 +62,11 @@
 		<div class="margin_bottom_20">
 			<table id="repoMngTable">
 				<!-- These tr's must be repeatable -->
-				<tr class="">
+				<tr>
 					<td class="bullet" />
 					<td class="repo_type text_left">
-						<div class="margin_bottom_10">Kettle Database Repository</div>
-						<div>A Kettle database repository uses a central relational
-							database to store ETL...</div>
+						<div class="margin_bottom_10">Development One</div>
+						<div>Pentaho repository | http://localhost:9080/pentaho</div>
 					</td>
 					<td class="default">
 						<button class="defaultBtn">Set Default</button>
@@ -76,9 +75,28 @@
 				<tr>
 					<td class="bullet" />
 					<td class="repo_type text_left">
-						<div class="margin_bottom_10">Kettle File Repository</div>
-						<div>A Kettle file repository uses your local file system to
-							store ETL metadata...</div>
+						<div class="margin_bottom_10">Development Two</div>
+						<div>Pentaho repository | http://localhost:9080/pentaho</div>
+					</td>
+					<td class="default">
+						<button class="defaultBtn">Set Default</button>
+					</td>
+				</tr>
+				<tr>
+					<td class="bullet" />
+					<td class="repo_type text_left">
+						<div class="margin_bottom_10">Test Repo</div>
+						<div>Lorem ipsum dolor sit amet, consectetur adipiscing ellityelit...</div>
+					</td>
+					<td class="default">
+						<button class="defaultBtn">Set Default</button>
+					</td>
+				</tr>
+				<tr>
+					<td class="bullet" />
+					<td class="repo_type text_left">
+						<div class="margin_bottom_10">Test Repo</div>
+						<div></div>
 					</td>
 					<td class="default">
 						<button class="defaultBtn">Set Default</button>
