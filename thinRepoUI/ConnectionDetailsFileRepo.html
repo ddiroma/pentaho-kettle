@@ -4,26 +4,26 @@
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="ThinRepoFlow.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script>
-$(document).ready(function() {
-    $('input').keyup(function() {
+	$(document).ready(function() {
+		$('input').keyup(function() {
 
-        var empty = false;
-        $('input').each(function() {
-            if ($(this).val() == '') {
-                empty = true;
-            }
-        });
+			var empty = false;
+			$('input').each(function() {
+				if ($(this).val() == '') {
+					empty = true;
+				}
+			});
 
-        if (empty) {
-            $('#finish').attr('disabled', 'disabled'); 
-        } else {
-            $('#finish').removeAttr('disabled');
-        }
-    });
-});
-
+			if (empty) {
+				$('#finish').attr('disabled', 'disabled');
+			} else {
+				$('#finish').removeAttr('disabled');
+			}
+		});
+	});
 </script>
 </head>
 <body>
@@ -34,17 +34,20 @@ $(document).ready(function() {
 				<label for="displayName" class="margin_bottom_5 block text_left">Display
 					Name</label> <input id="displayName" class="block" type="text" size="50" />
 			</div>
-			<div class="margin_bottom_15">
+			<div class="margin_bottom_20">
 				<label for="location" class="margin_bottom_5 block text_left">Location</label>
-				<button id="browse" class="right standard" style="margin-right:5px;">Browse</button>
+				<button id="browse" class="right standard"
+					style="margin-right: 5px;">Browse</button>
 				<input id="location" class="block" type="text" />
 			</div>
-			<div class="margin_bottom_15 text_left">
+			<div class="margin_bottom_20 text_left">
 				<div class="margin_bottom_10">
-				<input id="dont_modify" type="checkbox"/><label for="dont_modify"> Don't modify items in this location</label>
+					<input id="dont_modify" type="checkbox" /><label for="dont_modify">
+						Don't modify items in this location</label>
 				</div>
-				<div class="margin_bottom_10">
-				<input id="show_hidden" type="checkbox"/><label for="show_hidden"> Show hidden folders</label>
+				<div>
+					<input id="show_hidden" type="checkbox" /><label for="show_hidden">
+						Show hidden folders</label>
 				</div>
 			</div>
 			<div class="margin_bottom_20">
@@ -52,19 +55,21 @@ $(document).ready(function() {
 				<textarea id="description" class="block" rows="4" cols="50"></textarea>
 			</div>
 			<div class="text_left">
-				<input id="makeDefault" type="checkbox"/><label for="makeDefault"> Make default-launch on startup</label>
+				<input id="makeDefault" type="checkbox" /><label for="makeDefault">
+					Make default-launch on startup</label>
 			</div>
 		</div>
 		<div class="bottom">
-		<div class="margin_bottom_20">
-			<hr />
-		</div>
-		<div>
-			<img class="left" alt="" src="images/u42.png" /><a
-				id="btnHelp" class="left" href="">Help</a>
-			<button id="finish" class="right margin_left_10 secondary" type="button" disabled="disabled">Finish</button>
-			<button class="right secondary" type="button">Back</button>
-		</div>
+			<div class="margin_bottom_20">
+				<hr />
+			</div>
+			<div>
+				<img class="left" alt="" src="images/u42.png" /><a id="btnHelp"
+					class="left" href="">Help</a>
+				<button id="finish" class="right margin_left_10 secondary"
+					type="button" disabled="disabled">Finish</button>
+				<button class="right secondary" type="button">Back</button>
+			</div>
 		</div>
 	</div>
 </body>

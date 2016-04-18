@@ -5,46 +5,46 @@
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="ThinRepoFlow.css" />
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script>
-$(document).ready(function() {
-    $('input').keyup(function() {
+	$(document).ready(function() {
+		$('input').keyup(function() {
 
-        var empty = false;
-        $('input').each(function() {
-            if ($(this).val() == '') {
-                empty = true;
-            }
-        });
+			var empty = false;
+			$('input').each(function() {
+				if ($(this).val() == '') {
+					empty = true;
+				}
+			});
 
-        if (empty) {
-            $('#connect').attr('disabled', 'disabled'); 
-        } else {
-            $('#connect').removeAttr('disabled');
-        }
-    });
-});
-
+			if (empty) {
+				$('#connect').attr('disabled', 'disabled');
+			} else {
+				$('#connect').removeAttr('disabled');
+			}
+		});
+	});
 </script>
 </head>
 <body>
 	<div class="main_div">
-		<div class="header margin_bottom_30">
+		<div class="header margin_bottom_60">
 			<img id="pentaho-img" alt="" src="images/u135.png" />
 		</div>
 		<div class="title_text margin_bottom_30">Repository Connection</div>
 		<div class="middle_div2">
 			<div class="margin_bottom_20">
 				<label for="userName" class="margin_bottom_5 block text_left">User
-					Name</label>
-				<input id="userName" class="block repo_conn_txt" type="text" />
+					Name</label> <input id="userName" class="block repo_conn_txt" type="text" />
 			</div>
 			<div class="margin_bottom_20">
 				<label for="password" class="margin_bottom_5 block text_left">Password</label>
 				<input id="password" class="block repo_conn_txt" type="password" />
 			</div>
 			<div>
-				<button id="connect" class="standard" type="button" disabled="disabled">Connect</button>
+				<button id="connect" class="standard" type="button"
+					disabled="disabled">Connect</button>
 			</div>
 		</div>
 	</div>

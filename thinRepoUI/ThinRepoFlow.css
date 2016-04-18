@@ -40,9 +40,9 @@
 * BODY and MAIN DIVS
 */
 body {
-	/* font-family: Helvetica, Arial, Sans-Serif; */
 	font-family: OpenSansLight, Helvetica, Arial, Sans serif;
 	overflow: hidden;
+	margin: 0px;
 }
 
 .main_div {
@@ -53,14 +53,11 @@ body {
 .middle_div {
 	margin: auto;
 	width: 68%;
-	margin-bottom: 40px;
 }
 
 .middle_div2 {
 	margin: auto;
-	width: 50%;
-	padding: 10px;
-	margin-bottom: 40px;
+	width: 49%;
 }
 
 /*
@@ -104,7 +101,8 @@ a {
 	color: #005EAA;
 }
 
-a:hover, a:active {
+a:hover, 
+a:active {
 	text-decoration: underline;
 	color: #0F2B5B;
 }
@@ -173,7 +171,8 @@ button.standard:enabled {
 	cursor: pointer;
 }
 
-button.standard:hover, button.standard:active {
+button.standard:hover, 
+button.standard:active {
 	background-color: #0F2B5B;
 	color: #FFFFFF;
 }
@@ -185,13 +184,15 @@ button.secondary:enabled {
 	cursor: pointer;
 }
 
-button.secondary:hover, button.secondary:active {
+button.secondary:hover, 
+button.secondary:active {
 	background-color: #FFFFFF;
 	color: #0F2B5B;
 	border: 1px solid #0F2B5B;
 }
 
-button:disabled, button:disabled:hover {
+button:disabled, 
+button:disabled:hover {
 	background-color: #E4E4E4;
 	color: #888888;
 	border: 1px solid #E4E4E4;
@@ -202,12 +203,14 @@ button.same_width {
 }
 
 button#connect {
-	width: 272px;
+	width: 278px;
 }
 
 button.defaultBtn {
-	height: 15px !important;
+	height: 20px !important;
 	border-radius: 10px;
+	background-color: #FFFFFF;
+	color: #FFFFFF;
 }
 
 #btnHelp {
@@ -215,7 +218,7 @@ button.defaultBtn {
 }
 
 #browse {
-	height: 40px !important;	
+	height: 40px !important;
 }
 
 /*
@@ -223,7 +226,7 @@ button.defaultBtn {
 */
 input[type="text"], 
 input[type="password"], 
-textarea,
+textarea, 
 #connectionDD {
 	height: 36px;
 	width: 370px;
@@ -231,7 +234,7 @@ textarea,
 	border-radius: 3px;
 	border: 1px solid #CCCCCC;
 	font-size: 14px;
-	color: #666666;
+	color: #333333;
 }
 
 input[type="text"]:focus, 
@@ -254,15 +257,16 @@ input#location {
 }
 
 textarea#description {
-	overflow: hidden; 
-	height : 65px;
+	overflow: hidden;
+	height: 65px;
 	resize: none;
 	height: 65px;
+	padding: 5px;
 }
 
 textarea#no_conn {
-	overflow: hidden; 
-	resize : none;
+	overflow: hidden;
+	resize: none;
 	background-color: #E4E4E4;
 	color: #888888;
 	padding: 85px 5px;
@@ -279,17 +283,17 @@ select {
 	border-collapse: collapse;
 	border-radius: 3px;
 	height: 200px;
-	width: 378px;
-	overflow-y:auto;
+	width: 386px;
+	overflow-y: auto;
 }
 
 .db_list_items {
-	font-size:14px;
+	font-size: 14px;
 	color: #666666;
 	padding: 5px;
 }
 
-div#dbDiv > div.active {
+div#dbDiv>div.active {
 	color: #FFFFFF;
 	background-color: #005EAA;
 }
@@ -301,45 +305,63 @@ table {
 	width: 100%;
 }
 
-table, td {
+table, 
+td {
 	border: 1px solid #CCCCCC;
 	border-collapse: collapse;
-	font-size: 14px;
 	cursor: pointer;
-}
-
-td:nth-child(2) {
-	padding: 10px;
-	border-left: none;
 }
 
 td.bullet {
 	border-right: none;
-	width: 5px;
+	width: 7px;
+	padding: 0px;
 }
 
-table tr.active td {
+td.repo_type {
+	padding: 15px 15px 15px 10px;
+	border-left: none;
+	border-right: none;
+}
+
+td.default {
+	border-left: none;
+}
+
+#repoMngTable tr td.repo_type {
+	width: 380px;
+}
+
+tr.active td {
 	background: #005EAA;
 	color: #FFFFFF;
 }
 
-#reposTable>tbody>tr.active>td:nth-child(2)>div.margin_bottom_10,
-#repoMngTable>tbody>tr.active>td:nth-child(2)>div.margin_bottom_10 {
+td button.activate {
+	background-color: green !important;
+	color: #FFFFFF !important;
+}
+
+tr.active>td.repo_type>div:nth-child(1),
+tr.active>td.repo_type>div:nth-child(1) {
 	font-size: 24px;
 }
 
-#reposTable>tbody>tr:not(.active ) >td:nth-child(2)>div.margin_bottom_10, 
-#repoMngTable>tbody>tr.active>td:nth-child(2)>div.margin_bottom_10 {
+tr:not(.active )>td.repo_type>div:nth-child(1),
+tr:not(.active )>td.repo_type>div:nth-child(1) {
 	font-size: 24px;
 	color: #333333;
 }
 
-table tr.hover td.bullet {
+tr.hover td.bullet {
 	background: #005EAA;
 }
 
-table>tbody>tr>td:nth-child(2)> {
-	
+tr.hover td button.defaultBtn, 
+tr.active td button.defaultBtn:not(.activate ) {
+	background: #CCCCCC;
+	color: #666666;
+	cursor: pointer;
 }
 
 /*
@@ -374,4 +396,8 @@ hr {
 	width: 570px;
 	height: 100px;
 	border: none;
+}
+
+.hidden {
+	visibility: hidden;
 }

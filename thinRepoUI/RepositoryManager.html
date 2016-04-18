@@ -4,63 +4,103 @@
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="ThinRepoFlow.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script>
-$(document).ready(function(){
-    $("#repoMngTable").children("tbody").children("tr").children("td").click(function(){
-    	$("#repoMngTable").children("tbody").children("tr").removeClass("active");
-        $(this.parentNode).toggleClass("active");
-    });
-    
-}); 
-$(document).ready(function(){
-    $("#repoMngTable").children("tbody").children("tr").children("td").hover(function(){
-        $(this.parentNode).toggleClass("hover");
-    });
-});
+	/* When page loads, activate default repository if any and make edit/delete buttons visible */
+	$(document).ready(
+			function() {
+				$("tr.active").children("td.default").children(".defaultBtn")
+						.html("Default");
+				if ($("tr").hasClass("active"))
+					$("#editBtn, #deleteBtn").removeClass("hidden");
+			});
+
+	/* On hover over td, make the beginning of that tr shine blue and the 'set default' button show */
+	$(document).ready(
+			function() {
+				$("#repoMngTable").children("tbody").children("tr").children(
+						"td").hover(function() {
+					if (!$(this.parentNode).hasClass("active"))
+						$(this.parentNode).toggleClass("hover");
+				});
+			});
+
+	/* When td is clicked, make that tr blue with white lettering and change 'set default'
+	   button to green AND make edit/delete buttons visible */
+	$(document).ready(
+			function() {
+				$("#repoMngTable").children("tbody").children("tr").children(
+						"td:not(button)").click(
+						function() {
+							$("#repoMngTable").children("tbody").children("tr")
+									.removeClass("active");
+							$("#repoMngTable").children("tbody").children("tr")
+									.removeClass("hover");
+							$("#repoMngTable").children("tbody").children("tr")
+									.children("td.default").children(
+											".defaultBtn").html("Set Default");
+							$(this.parentNode).toggleClass("active");
+							$("#editBtn, #deleteBtn").removeClass("hidden");
+						});
+
+			});
+
+	$(document).ready(function() {
+		$(".defaultBtn").click(function() {
+			$(".defaultBtn").html("Set Default");
+			$(".defaultBtn").removeClass("activate");
+			$(this).addClass("activate");
+			$(this).html("Default");
+		});
+
+	});
 </script>
 </head>
 <body>
 	<div class="main_div">
-	<div>
-		<table id="repoMngTable" class="text_left">
-			<!-- These tr's must be repeatable -->
-			<tr>
-				<td class="bullet"/>
-				<td width="300px;">
-					<div class="margin_bottom_10">Kettle Database
-						Repository</div>
-					<div>A Kettle database repository uses a central relational
-						database to store ETL...</div>
-				</td>
-				<td>
-					<button class="defaultBtn">Set Default</button>
-				</td>
-			</tr>
-			<tr>
-				<td class="bullet"/>
-				<td width="300px;">
-					<div class="margin_bottom_10">Kettle File Repository</div>
-					<div>A Kettle file repository uses your local file system to
-						store ETL metadata...</div>
-				</td>
-				<td>
-					<button class="defaultBtn">Set Default</button>
-				</td>
-			</tr>
-		</table>
+		<div class="margin_bottom_20">
+			<table id="repoMngTable">
+				<!-- These tr's must be repeatable -->
+				<tr class="">
+					<td class="bullet" />
+					<td class="repo_type text_left">
+						<div class="margin_bottom_10">Kettle Database Repository</div>
+						<div>A Kettle database repository uses a central relational
+							database to store ETL...</div>
+					</td>
+					<td class="default">
+						<button class="defaultBtn">Set Default</button>
+					</td>
+				</tr>
+				<tr>
+					<td class="bullet" />
+					<td class="repo_type text_left">
+						<div class="margin_bottom_10">Kettle File Repository</div>
+						<div>A Kettle file repository uses your local file system to
+							store ETL metadata...</div>
+					</td>
+					<td class="default">
+						<button class="defaultBtn">Set Default</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div>
+			<button id="deleteBtn" class="right margin_left_10 secondary hidden"
+				type="button">Delete</button>
+			<button id="editBtn" class="right secondary hidden" type="button"
+				style="margin-left: 85px;">Edit</button>
+			<button id="addBtn" class="right standard" type="button">Add</button>
 		</div>
 		<div class="bottom">
 			<div class="margin_bottom_20">
 				<hr />
 			</div>
 			<div>
-				<img class="left" alt="" src="images/u42.png" /><a
-					id="btnHelp" class="left" href="">Help</a>
-				<button id="btnClose" class="right margin_left_10 secondary"
-					type="button">Close</button>
-				<button id="btnGetStarted" class="right standard" type="button">Get
-					Started</button>
+				<img class="left" alt="" src="images/u42.png" /><a id="btnHelp"
+					class="left" href="">Help</a>
+				<button id="btnClose" class="right secondary" type="button">Close</button>
 			</div>
 		</div>
 	</div>
