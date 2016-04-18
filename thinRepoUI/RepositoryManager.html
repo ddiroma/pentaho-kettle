@@ -21,7 +21,7 @@
 			function() {
 				$("#repoMngTable").children("tbody").children("tr").children(
 						"td").hover(function() {
-					/* if (!$(this.parentNode).hasClass("active")) */
+					if (!$(this.parentNode).hasClass("active"))
 						$(this.parentNode).toggleClass("hover");
 				});
 			});
