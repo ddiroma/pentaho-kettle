@@ -17,22 +17,18 @@ public class ThinDialog extends Dialog {
   protected Shell parent;
   protected int width;
   protected int height;
-  protected String title;
-  protected String url;
   protected Browser browser;
   protected Shell dialog;
   protected Display display;
 
-  public ThinDialog( Shell shell, int width, int height, String title, String url ) {
+  public ThinDialog( Shell shell, int width, int height ) {
     super( shell );
 
     this.width = width;
     this.height = height;
-    this.title = title;
-    this.url = url;
   }
 
-  public void createDialog() {
+  public void createDialog( String title, String url ) {
 
     Shell parent = getParent();
     display = parent.getDisplay();

@@ -1,34 +1,11 @@
-<script
-    src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script>
-	$(document).ready(
-			function() {
-				$("#reposTable").children("tbody").children("tr")
-						.children("td").click(
-								function() {
-									$("#reposTable").children("tbody")
-											.children("tr").removeClass(
-													"active");
-									$(this.parentNode).toggleClass("active");
-								});
-
-			});
-	$(document).ready(
-			function() {
-				$("#reposTable").children("tbody").children("tr")
-						.children("td").hover(function() {
-							$(this.parentNode).toggleClass("hover");
-						});
-			});
-</script>
 <div class="main_div">
   <div class="primary_text">
     <table id="reposTable" class="text_left">
-      <tr ng-repeat="repository in repoModel.repositories">
+      <tr ng-repeat="repositoryType in model.repositoryTypes" ng-class="{active : repositoryType === model.selectedRepositoryType}">
         <td class="bullet" />
-        <td class="repo_type" ng-click="selectRepository(repository)">
-          <div class="margin_bottom_5">{{repository.name}}</div>
-          <div>{{repository.description}}</div>
+        <td class="repo_type" ng-click="selectRepositoryType(repositoryType)">
+          <div class="margin_bottom_5">{{repositoryType.name}}</div>
+          <div>{{repositoryType.description}}</div>
         </td>
       </tr>
     </table>
@@ -40,7 +17,7 @@
     <div>
       <img class="left" alt="" src="images/u42.png" /><a id="btnHelp" class="left" href="">Help</a>
       <button id="btnClose" class="right margin_left_10 secondary" type="button" ng-click="close()">Close</button>
-      <button id="btnGetStarted" class="right standard" type="button" ng-disabled="!repoModel.selectedRepository" ng-click="getStarted(repoModel.selectedRepository)">Get Started</button>
+      <button id="btnGetStarted" class="right standard" type="button" ng-disabled="!model.selectedRepositoryType" ng-click="getStarted(model.selectedRepositoryType)">Get Started</button>
     </div>
   </div>
 </div>

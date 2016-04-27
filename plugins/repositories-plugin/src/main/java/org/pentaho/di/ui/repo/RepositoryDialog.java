@@ -35,40 +35,51 @@ import java.util.HashMap;
 /**
  * Created by bmorrise on 2/21/16.
  */
-public class RepoConnectionDialog extends ThinDialog {
+public class RepositoryDialog extends ThinDialog {
 
   private static final int WIDTH = 630;
   private static final int HEIGHT = 630;
-  private static final String TITLE = "New Repository Connection";
-  private static final String WEB_CLIENT_PATH = "/repositories/web/index.html";
+  private static final String CREATION_TITLE = "New Repository Connection";
+  private static final String CREATION_WEB_CLIENT_PATH = "/repositories/web/index.html";
+  private static final String MANAGER_TITLE = "Repository Manager";
+  private static final String MANAGER_WEB_CLIENT_PATH = "/repositories/web/index.html#repository-manager";
   private static final String OSGI_SERVICE_PORT = "OSGI_SERVICE_PORT";
   private RepoConnectController controller;
   private Shell shell;
 
-  public RepoConnectionDialog( Shell shell ) {
+  public RepositoryDialog( Shell shell ) {
     this( shell, new RepoConnectController() );
-    System.out.println( "This loaded." );
   }
 
-  public RepoConnectionDialog( Shell shell, RepoConnectController controller ) {
-    super( shell, WIDTH, HEIGHT, TITLE, getRepoURL() );
+  public RepositoryDialog( Shell shell, RepoConnectController controller ) {
+    super( shell, WIDTH, HEIGHT );
     this.controller = controller;
     this.shell = shell;
   }
 
-  public void open() {
-    super.createDialog();
-
+  private void open() {
     new BrowserFunction( browser, "close" ) {
       @Override public Object function( Object[] arguments ) {
         dialog.dispose();
-        return null;
+        return true;
       }
     };
 
-    new BrowserFunction( browser, "getRepos" ) {
+    new BrowserFunction( browser, "getRepositories" ) {
+      @Override public Object function( Object[] objects ) {
+        return controller.getRepositories();
+      }
+    };
+
+    new BrowserFunction( browser, "getRepositoryTypes" ) {
       @Override public Object function( Object[] objects ) {
         return controller.getPlugins();
+      }
+    };
+
+    new BrowserFunction( browser, "deleteRepository" ) {
+      @Override public Object function( Object[] objects ) {
+        return controller.deleteRepository( (String) objects[ 0 ] );
       }
     };
 
@@ -79,13 +90,24 @@ public class RepoConnectionDialog extends ThinDialog {
       }
     };
 
-    new BrowserFunction( browser, "createKettleFileRepository" ) {
+    new BrowserFunction( browser, "createRepository" ) {
+      @SuppressWarnings( "unchecked" )
       @Override public Object function( Object[] objects ) {
         try {
-          HashMap<String, String> fileRepository = new ObjectMapper().readValue( (String) objects[ 0 ], HashMap.class );
+          return controller.createRepository( (String) objects[ 0 ],
+            new ObjectMapper().readValue( (String) objects[ 1 ], HashMap.class ) );
         } catch ( Exception e ) {
           // Do something later
         }
+        return false;
+      }
+    };
+
+    new BrowserFunction( browser, "connectToRepository" ) {
+      @Override public Object function( Object[] objects ) {
+        controller.connectToRepository();
+        dialog.dispose();
+        return true;
       }
     };
 
@@ -94,6 +116,16 @@ public class RepoConnectionDialog extends ThinDialog {
         display.sleep();
       }
     }
+  }
+
+  public void openManager() {
+    super.createDialog( MANAGER_TITLE, getRepoURL( MANAGER_WEB_CLIENT_PATH ) );
+    open();
+  }
+
+  public void openCreation() {
+    super.createDialog( CREATION_TITLE, getRepoURL( CREATION_WEB_CLIENT_PATH ) );
+    open();
   }
 
 
@@ -106,7 +138,7 @@ public class RepoConnectionDialog extends ThinDialog {
     return null;
   }
 
-  private static String getRepoURL() {
-    return "http://localhost:" + getOsgiServicePort() + WEB_CLIENT_PATH;
+  private static String getRepoURL( String path ) {
+    return "http://localhost:" + getOsgiServicePort() + path;
   }
 }

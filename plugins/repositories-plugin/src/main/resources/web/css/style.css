@@ -359,7 +359,7 @@ tr:not(.active)>td.repo_type>div:nth-child(1){
   color: #333333;
 }
 
-tr.hover td.bullet {
+tr:hover td.bullet {
   background: #005EAA;
 }
 

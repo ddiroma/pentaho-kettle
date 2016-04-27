@@ -31,9 +31,25 @@ function(angular) {
         templateUrl: 'pentaho-repository-connection-details.html',
         controller: 'PentahoRepositoryController'
       }).
+      when('/pentaho-repository-creation-success', {
+        templateUrl: 'pentaho-repository-creation-success.html',
+        controller: 'PentahoRepositoryCreationSuccessController'
+      }).
+      when('/pentaho-repository-connect', {
+        templateUrl: 'pentaho-repository-connect.html',
+        controller: 'PentahoRepositoryConnectController'
+      }).
       when('/kettle-file-repository-details', {
         templateUrl: 'kettle-file-repository-details.html',
         controller: 'KettleFileRepositoryDetailsController'
+      }).
+      when('/kettle-file-repository-creation-success', {
+        templateUrl: 'creation-success.html',
+        controller: 'KettleFileRepositoryCreationSuccessController'
+      }).
+      when('/repository-manager', {
+        templateUrl: 'repository-manager.html',
+        controller: 'RepositoryManagerController'
       }).
       otherwise({
         redirectTo: '/pentaho-repository'

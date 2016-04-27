@@ -22,7 +22,9 @@
 
 package org.pentaho.di.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.pentaho.di.core.database.DatabaseMeta;
 import org.pentaho.di.core.exception.KettleException;
@@ -81,5 +83,7 @@ public interface RepositoryMeta {
   public RepositoryCapabilities getRepositoryCapabilities();
 
   public RepositoryMeta clone();
+
+  public abstract void populate( Map<String, Object> properties );
 
 }

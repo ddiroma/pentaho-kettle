@@ -47,10 +47,12 @@ public class RepositoryConnectMenu {
   private ToolItem connectButton;
   private ToolItem connectDropdown;
   private RepositoriesMeta repositoriesMeta;
+  private final RepoConnectController repoConnectController;
 
   public RepositoryConnectMenu( Spoon spoon, ToolBar toolBar ) {
     this.toolBar = toolBar;
     this.spoon = spoon;
+    repoConnectController = new RepoConnectController();
   }
 
   public void update() {
@@ -102,7 +104,7 @@ public class RepositoryConnectMenu {
     connectButton.setText( BaseMessages.getString( PKG, "RepositoryConnectMenu.Connect" ) );
     connectButton.addSelectionListener( new SelectionAdapter() {
       @Override public void widgetSelected( SelectionEvent selectionEvent ) {
-        new RepoConnectionDialog( spoon.getShell() ).open();
+        new RepositoryDialog( spoon.getShell() ).openCreation();
         renderAndUpdate();
       }
     } );
@@ -123,7 +125,7 @@ public class RepositoryConnectMenu {
             item.setText( repositoriesMeta.getRepository( i ).getName() );
             item.addSelectionListener( new SelectionAdapter() {
               @Override public void widgetSelected( SelectionEvent selectionEvent ) {
-                new RepoConnectionDialog( spoon.getShell() ).open();
+                repoConnectController.connectToRepository( ( (MenuItem) selectionEvent.widget ).getText() );
                 renderAndUpdate();
               }
             } );
@@ -135,7 +137,7 @@ public class RepositoryConnectMenu {
         managerItem.setText( BaseMessages.getString( PKG, "RepositoryConnectMenu.RepositoryManager" ) );
         managerItem.addSelectionListener( new SelectionAdapter() {
           @Override public void widgetSelected( SelectionEvent selectionEvent ) {
-            new RepoConnectionDialog( spoon.getShell() ).open();
+            new RepositoryDialog( spoon.getShell() ).openManager();
             renderAndUpdate();
           }
         } );

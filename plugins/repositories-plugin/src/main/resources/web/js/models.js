@@ -3,8 +3,13 @@ define( [
   ],
   function ( repoConnectionApp ) {
 
-    repoConnectionApp.service("repoModel", function() {
-      this.repositories = JSON.parse(getRepos());
+    repoConnectionApp.service("repositoryTypesModel", function() {
+      this.repositoryTypes = JSON.parse(getRepositoryTypes());
+      this.selectedRepository = null;
+    });
+
+    repoConnectionApp.service("repositoriesModel", function() {
+      this.repositories = JSON.parse(getRepositories());
       this.selectedRepository = null;
     });
 
@@ -12,6 +17,7 @@ define( [
       this.displayName = "";
       this.url = "http://localhost:8080/pentaho-di";
       this.description = "";
+      this.isDefaultOnStartup = false;
     });
 
     repoConnectionApp.service("kettleFileRepositoryModel", function() {
