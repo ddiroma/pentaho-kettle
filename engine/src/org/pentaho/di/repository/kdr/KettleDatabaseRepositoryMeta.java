@@ -113,6 +113,14 @@ public class KettleDatabaseRepositoryMeta extends BaseRepositoryMeta implements 
     return description;
   }
 
+  public Boolean isDefault() {
+    return isDefault;
+  }
+
+  public void setDefault( Boolean isDefault ) {
+    this.isDefault = isDefault;
+  }
+
   public void setConnection( DatabaseMeta connection ) {
     this.databaseMeta = connection;
   }

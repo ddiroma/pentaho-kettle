@@ -128,6 +128,9 @@ define(
       $scope.selectRepository = function(repository) {
         repositoriesModel.selectedRepository = repository;
       }
+      $scope.setDefault = function(repository) {
+        setDefaultRepository(repository);
+      }
       $scope.edit = function(repository) {
         try {
           alert(repository.name);

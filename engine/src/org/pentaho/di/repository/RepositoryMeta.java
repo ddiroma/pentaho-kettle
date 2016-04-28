@@ -74,6 +74,17 @@ public interface RepositoryMeta {
    *          the description to set
    */
   public abstract void setDescription( String description );
+  
+  /**
+   * @return the isDefault
+   */
+  public abstract Boolean isDefault();
+
+  /**
+   * @param isDefault
+   *          the isDefault to set
+   */
+  public abstract void setDefault( Boolean isDefault );
 
   /**
    * Describes the capabilities of the repository

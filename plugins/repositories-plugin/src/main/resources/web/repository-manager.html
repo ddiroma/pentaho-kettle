@@ -2,14 +2,14 @@
   <div class="margin_bottom_20">
     <table id="repoMngTable">
       <!-- These tr's must be repeatable -->
-      <tr ng-repeat="repository in model.repositories">
-        <td class="bullet" />
-        <td class="repo_type text_left" ng-click="selectRepository(repository)">
+      <tr ng-repeat="repository in model.repositories" ng-class="{active : repository === model.selectedRepository}"  ng-click="selectRepository(repository)">
+	<td class="bullet" />
+        <td class="repo_type text_left">
           <div class="margin_bottom_10">{{repository.name}}</div>
           <div>{{repository.description}}</div>
         </td>
         <td class="default">
-          <button class="defaultBtn">Set Default</button>
+          <button class="defaultBtn" ng-click="setDefault(repository)" ng-class="">Set Default</button>
         </td>
       </tr>
     </table>

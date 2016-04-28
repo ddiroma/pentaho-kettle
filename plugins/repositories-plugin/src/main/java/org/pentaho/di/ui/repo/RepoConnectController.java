@@ -143,4 +143,9 @@ public class RepoConnectController {
     }
     return true;
   }
+  
+  public boolean setDefaultRepository( String name ) {
+    //TODO: do something later
+    return true;
+  }
 }

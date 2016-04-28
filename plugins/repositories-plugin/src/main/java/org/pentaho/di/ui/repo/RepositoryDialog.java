@@ -111,6 +111,12 @@ public class RepositoryDialog extends ThinDialog {
       }
     };
 
+    new BrowserFunction( browser, "setDefaultRepository" ) {
+      @Override public Object function( Object[] objects ) {
+        return controller.setDefaultRepository( (String) objects[ 0 ] );
+      }
+    };
+
     while ( !dialog.isDisposed() ) {
       if ( !display.readAndDispatch() ) {
         display.sleep();

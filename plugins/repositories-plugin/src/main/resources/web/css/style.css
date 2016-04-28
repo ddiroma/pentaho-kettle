@@ -363,14 +363,14 @@ tr:hover td.bullet {
   background: #005EAA;
 }
 
-tr.hover td button.defaultBtn,
+tr:hover td button.defaultBtn,
 tr.active:not(.hover):hover td button.defaultBtn {
   background: #CCCCCC;
   color: #666666;
   cursor: pointer;
 }
 
-tr.active:not(.hover) td button.defaultBtn {
+tr.active:not(:hover) td button.defaultBtn {
   color: #005EAA;
   background: #005EAA;
 }
