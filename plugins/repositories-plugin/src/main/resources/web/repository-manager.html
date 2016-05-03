@@ -9,7 +9,7 @@
           <div>{{repository.description}}</div>
         </td>
         <td class="default">
-          <button class="defaultBtn" ng-click="setDefault(repository)" ng-class="">Set Default</button>
+          <button class="defaultBtn" ng-click="setDefault(repository)" ng-class="{activate : repository.isDefault == true}">Set Default</button>
         </td>
       </tr>
     </table>

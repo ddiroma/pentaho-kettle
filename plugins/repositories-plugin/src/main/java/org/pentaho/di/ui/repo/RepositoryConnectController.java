@@ -22,6 +22,9 @@
 
 package org.pentaho.di.ui.repo;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.simple.JSONArray;
@@ -34,9 +37,6 @@ import org.pentaho.di.repository.RepositoriesMeta;
 import org.pentaho.di.repository.Repository;
 import org.pentaho.di.repository.RepositoryMeta;
 import org.pentaho.di.ui.spoon.Spoon;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by bmorrise on 4/18/16.
@@ -111,10 +111,12 @@ public class RepositoryConnectController {
         String name = repositoriesMeta.getRepository( i ).getName();
         String description = repositoriesMeta.getRepository( i ).getDescription();
         String id = repositoriesMeta.getRepository( i ).getId();
+        Boolean isDefault = Boolean.valueOf( repositoriesMeta.getRepository( i ).isDefault() );
         JSONObject repoJSON = new JSONObject();
         repoJSON.put( "id", id );
         repoJSON.put( "name", name );
         repoJSON.put( "description", description );
+        repoJSON.put( "isDefault", isDefault );
         list.add( repoJSON );
       }
     }
@@ -158,7 +160,17 @@ public class RepositoryConnectController {
   }
 
   public boolean setDefaultRepository( String name ) {
-    //TODO: do something later
+    RepositoryMeta repositoryMeta = repositoriesMeta.findRepository( name );
+    int index = repositoriesMeta.indexOfRepository( repositoryMeta );
+    for ( int i = 0; i < repositoriesMeta.nrRepositories(); i++ ) {
+      repositoriesMeta.getRepository( i ).setDefault( false );
+    }
+    repositoriesMeta.getRepository( index ).setDefault( true );
+    try {
+      repositoriesMeta.writeData();
+    } catch ( KettleException ke ) {
+      log.error( "Unable to set default repository", ke );
+    }
     return true;
   }
 
