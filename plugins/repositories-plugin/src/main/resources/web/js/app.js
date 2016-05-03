@@ -32,8 +32,12 @@ function(angular) {
         controller: 'PentahoRepositoryController'
       }).
       when('/pentaho-repository-creation-success', {
-        templateUrl: 'pentaho-repository-creation-success.html',
+        templateUrl: 'creation-success.html',
         controller: 'PentahoRepositoryCreationSuccessController'
+      }).
+      when('/pentaho-repository-creation-failure', {
+        templateUrl: 'creation-failure.html',
+        controller: 'PentahoRepositoryCreationFailureController'
       }).
       when('/pentaho-repository-connect', {
         templateUrl: 'pentaho-repository-connect.html',
@@ -46,6 +50,10 @@ function(angular) {
       when('/kettle-file-repository-creation-success', {
         templateUrl: 'creation-success.html',
         controller: 'KettleFileRepositoryCreationSuccessController'
+      }).
+      when('/kettle-file-repository-creation-failure', {
+        templateUrl: 'creation-failure.html',
+        controller: 'KettleFileRepositoryCreationFailureController'
       }).
       when('/repository-manager', {
         templateUrl: 'repository-manager.html',

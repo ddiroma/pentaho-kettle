@@ -1,7 +1,7 @@
 <div class="main_div">
   <div class="primary_text">
     <table id="reposTable" class="text_left">
-      <tr ng-repeat="repositoryType in model.repositoryTypes" ng-class="{active : repositoryType === model.selectedRepositoryType}">
+      <tr ng-repeat="repositoryType in model.repositoryTypes" ng-class="{active : repositoryType == model.selectedRepositoryType}">
         <td class="bullet" />
         <td class="repo_type" ng-click="selectRepositoryType(repositoryType)">
           <div class="margin_bottom_5">{{repositoryType.name}}</div>

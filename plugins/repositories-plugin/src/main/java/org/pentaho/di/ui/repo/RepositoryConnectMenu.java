@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.i18n.BaseMessages;
 import org.pentaho.di.repository.RepositoriesMeta;
+import org.pentaho.di.repository.RepositoryMeta;
 import org.pentaho.di.ui.spoon.Spoon;
 
 public class RepositoryConnectMenu {
@@ -47,12 +48,12 @@ public class RepositoryConnectMenu {
   private ToolItem connectButton;
   private ToolItem connectDropdown;
   private RepositoriesMeta repositoriesMeta;
-  private final RepoConnectController repoConnectController;
+  private final RepositoryConnectController repoConnectController;
 
   public RepositoryConnectMenu( Spoon spoon, ToolBar toolBar ) {
     this.toolBar = toolBar;
     this.spoon = spoon;
-    repoConnectController = new RepoConnectController();
+    repoConnectController = new RepositoryConnectController();
   }
 
   public void update() {
@@ -104,7 +105,7 @@ public class RepositoryConnectMenu {
     connectButton.setText( BaseMessages.getString( PKG, "RepositoryConnectMenu.Connect" ) );
     connectButton.addSelectionListener( new SelectionAdapter() {
       @Override public void widgetSelected( SelectionEvent selectionEvent ) {
-        new RepositoryDialog( spoon.getShell() ).openCreation();
+        new RepositoryDialog( spoon.getShell(), repoConnectController ).openCreation();
         renderAndUpdate();
       }
     } );
@@ -125,8 +126,16 @@ public class RepositoryConnectMenu {
             item.setText( repositoriesMeta.getRepository( i ).getName() );
             item.addSelectionListener( new SelectionAdapter() {
               @Override public void widgetSelected( SelectionEvent selectionEvent ) {
-                repoConnectController.connectToRepository( ( (MenuItem) selectionEvent.widget ).getText() );
-                renderAndUpdate();
+                String repoName = ( (MenuItem) selectionEvent.widget ).getText();
+                RepositoryMeta repositoryMeta = repositoriesMeta.findRepository( repoName );
+                if ( repositoryMeta != null ) {
+                  if ( repositoryMeta.getId().equals( "PentahoEnterpriseRepository" ) ) {
+                    new RepositoryDialog( spoon.getShell(), repoConnectController ).openLogin( repositoryMeta );
+                  } else {
+                    repoConnectController.connectToRepository( repositoryMeta );
+                  }
+                  renderAndUpdate();
+                }
               }
             } );
           }
@@ -137,7 +146,7 @@ public class RepositoryConnectMenu {
         managerItem.setText( BaseMessages.getString( PKG, "RepositoryConnectMenu.RepositoryManager" ) );
         managerItem.addSelectionListener( new SelectionAdapter() {
           @Override public void widgetSelected( SelectionEvent selectionEvent ) {
-            new RepositoryDialog( spoon.getShell() ).openManager();
+            new RepositoryDialog( spoon.getShell(), repoConnectController ).openManager();
             renderAndUpdate();
           }
         } );

@@ -37,6 +37,7 @@ import java.util.ResourceBundle;
 
 import org.apache.commons.io.IOUtils;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
@@ -121,7 +122,7 @@ public class SpoonPerspectiveManager {
     private final XulVbox box;
 
     private final XulToolbar mainToolbar;
-
+    private final CCombo perspectivesCombo;
     private final SwtToolbarbutton btn;
     private final String name;
     private boolean initialized;
@@ -522,8 +523,8 @@ public class SpoonPerspectiveManager {
       box.setFlex( 1 );
       deck.addChild( box );
 
-      PerspectiveManager perspectiveInitializer =
-          new PerspectiveManager( per, box, mainToolbar, btn, name );
+      PerspectiveManager perspectiveManager =
+          new PerspectiveManager( per, box, mainToolbar, btn, perspectivesCombo, name );
       // Need to force init for main perspective even if it won't be shown
       if ( perspectiveIdx == y || y == 0 ) {
         if ( perspectiveIdx == y ) {

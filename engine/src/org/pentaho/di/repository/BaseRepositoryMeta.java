@@ -120,7 +120,7 @@ public class BaseRepositoryMeta {
       id = Const.NVL( XMLHandler.getTagValue( repnode, "id" ), id );
       name = XMLHandler.getTagValue( repnode, "name" );
       description = XMLHandler.getTagValue( repnode, "description" );
-      isDefault = Boolean.valueOf( XMLHandler.getTagValue( repnode, "isDefault" ) );
+      isDefault = Boolean.valueOf( XMLHandler.getTagValue( repnode, "is_default" ) );
     } catch ( Exception e ) {
       throw new KettleException( "Unable to load repository meta object", e );
     }
@@ -137,7 +137,7 @@ public class BaseRepositoryMeta {
     retval.append( "    " ).append( XMLHandler.addTagValue( "id", id ) );
     retval.append( "    " ).append( XMLHandler.addTagValue( "name", name ) );
     retval.append( "    " ).append( XMLHandler.addTagValue( "description", description ) );
-    retval.append( "    " ).append( XMLHandler.addTagValue( "isDefault", isDefault.toString() ) );
+    retval.append( "    " ).append( XMLHandler.addTagValue( "is_default", isDefault.toString() ) );
 
     return retval.toString();
   }

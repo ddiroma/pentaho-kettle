@@ -15,7 +15,7 @@ define( [
 
     repoConnectionApp.service("pentahoRepositoryModel",function() {
       this.displayName = "";
-      this.url = "http://localhost:8080/pentaho-di";
+      this.url = "http://localhost:9080/pentaho-di";
       this.description = "";
       this.isDefaultOnStartup = false;
     });

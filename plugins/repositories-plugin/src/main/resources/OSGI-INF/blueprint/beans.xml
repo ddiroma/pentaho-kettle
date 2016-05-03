@@ -9,7 +9,7 @@
     </ext:default-properties>
   </ext:property-placeholder>
 
-  <bean id="repositoriesSpoonPlugin" class="org.pentaho.di.ui.repo.RepoSpoonPlugin"
+  <bean id="repositoriesSpoonPlugin" class="org.pentaho.di.ui.repo.RepositorySpoonPlugin"
         scope="singleton" destroy-method="removeFromContainer">
   </bean>
 
@@ -40,7 +40,7 @@
   </service>
 
   <bean id="repositoriesHttpContext"
-        class="org.pentaho.di.ui.repo.RepoHttpContext">
+        class="org.pentaho.di.ui.repo.RepositoryHttpContext">
   </bean>
 
   <service id="repositoriesHttpContextService"

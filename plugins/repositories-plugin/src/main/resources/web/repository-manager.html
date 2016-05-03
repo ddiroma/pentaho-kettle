@@ -3,7 +3,7 @@
     <table id="repoMngTable">
       <!-- These tr's must be repeatable -->
       <tr ng-repeat="repository in model.repositories" ng-class="{active : repository === model.selectedRepository}"  ng-click="selectRepository(repository)">
-	<td class="bullet" />
+        <td class="bullet" />
         <td class="repo_type text_left">
           <div class="margin_bottom_10">{{repository.name}}</div>
           <div>{{repository.description}}</div>

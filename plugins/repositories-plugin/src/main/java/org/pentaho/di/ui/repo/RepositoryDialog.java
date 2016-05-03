@@ -22,10 +22,13 @@
 
 package org.pentaho.di.ui.repo;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.eclipse.swt.browser.BrowserFunction;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Shell;
+import org.pentaho.di.repository.RepositoryMeta;
 import org.pentaho.di.ui.thin.ThinDialog;
 import org.pentaho.platform.settings.ServerPort;
 import org.pentaho.platform.settings.ServerPortRegistry;
@@ -37,21 +40,20 @@ import java.util.HashMap;
  */
 public class RepositoryDialog extends ThinDialog {
 
+  private static Log log = LogFactory.getLog( RepositoryDialog.class );
   private static final int WIDTH = 630;
   private static final int HEIGHT = 630;
   private static final String CREATION_TITLE = "New Repository Connection";
   private static final String CREATION_WEB_CLIENT_PATH = "/repositories/web/index.html";
   private static final String MANAGER_TITLE = "Repository Manager";
   private static final String MANAGER_WEB_CLIENT_PATH = "/repositories/web/index.html#repository-manager";
+  private static final String LOGIN_TITLE = "Login to Repository";
+  private static final String LOGIN_WEB_CLIENT_PATH = "/repositories/web/index.html#pentaho-repository-connect";
   private static final String OSGI_SERVICE_PORT = "OSGI_SERVICE_PORT";
-  private RepoConnectController controller;
+  private RepositoryConnectController controller;
   private Shell shell;
 
-  public RepositoryDialog( Shell shell ) {
-    this( shell, new RepoConnectController() );
-  }
-
-  public RepositoryDialog( Shell shell, RepoConnectController controller ) {
+  public RepositoryDialog( Shell shell, RepositoryConnectController controller ) {
     super( shell, WIDTH, HEIGHT );
     this.controller = controller;
     this.shell = shell;
@@ -97,7 +99,7 @@ public class RepositoryDialog extends ThinDialog {
           return controller.createRepository( (String) objects[ 0 ],
             new ObjectMapper().readValue( (String) objects[ 1 ], HashMap.class ) );
         } catch ( Exception e ) {
-          // Do something later
+          log.error( "Unable to load repository json object", e );
         }
         return false;
       }
@@ -114,6 +116,15 @@ public class RepositoryDialog extends ThinDialog {
     new BrowserFunction( browser, "setDefaultRepository" ) {
       @Override public Object function( Object[] objects ) {
         return controller.setDefaultRepository( (String) objects[ 0 ] );
+      }
+    };
+
+    new BrowserFunction( browser, "loginToRepository" ) {
+      @Override public Object function( Object[] objects ) {
+        String username = (String) objects[ 0 ];
+        String password = (String) objects[ 1 ];
+        controller.connectToRepository( username, password );
+        return true;
       }
     };
 
@@ -134,6 +145,11 @@ public class RepositoryDialog extends ThinDialog {
     open();
   }
 
+  public void openLogin( RepositoryMeta repositoryMeta ) {
+    super.createDialog( LOGIN_TITLE, getRepoURL( LOGIN_WEB_CLIENT_PATH ) );
+    controller.setCurrentRepository( repositoryMeta );
+    open();
+  }
 
   private static Integer getOsgiServicePort() {
     // if no service port is specified try getting it from
