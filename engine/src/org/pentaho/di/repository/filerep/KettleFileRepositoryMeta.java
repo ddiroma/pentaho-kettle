@@ -22,6 +22,7 @@
 
 package org.pentaho.di.repository.filerep;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -154,14 +155,12 @@ public class KettleFileRepositoryMeta extends BaseRepositoryMeta implements Repo
     String description = (String) properties.get( "description" );
     String location = (String) properties.get( "location" );
     Boolean doNotModify = (Boolean) properties.get( "doNotModify" );
-    Boolean isDefault = (Boolean) properties.get( "isDefault" );
 
     setName( displayName );
     setHidingHiddenFiles( showHiddenFolders );
     setDescription( description );
     setBaseDirectory( location );
     setReadOnly( doNotModify );
-    setDefault( isDefault );
   }
 
   /**
