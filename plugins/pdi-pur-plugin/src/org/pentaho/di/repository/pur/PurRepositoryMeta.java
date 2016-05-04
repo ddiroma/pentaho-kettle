@@ -147,13 +147,12 @@ public class PurRepositoryMeta extends BaseRepositoryMeta implements RepositoryM
     String displayName = (String) properties.get( "displayName" );
     String url = (String) properties.get( "url" );
     String description = (String) properties.get( "description" );
-    Boolean isDefault = (Boolean) properties.get( "isDefault" );
+    Boolean isDefaultOnStartup = (Boolean) properties.get( "isDefaultOnStartup" );
 
     PurRepositoryLocation purRepositoryLocation = new PurRepositoryLocation( url );
 
     setName( displayName );
     setRepositoryLocation( purRepositoryLocation );
     setDescription( description );
-    setDefault( isDefault );
   }
 }

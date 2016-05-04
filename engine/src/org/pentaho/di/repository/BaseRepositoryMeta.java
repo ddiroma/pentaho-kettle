@@ -95,6 +95,19 @@ public class BaseRepositoryMeta {
     this.name = name;
     this.description = description;
   }
+  
+  /**
+   * @param id
+   * @param name
+   * @param description
+   * @param isDefault
+   */
+  public BaseRepositoryMeta( String id, String name, String description, boolean isDefault ) {
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.isDefault = isDefault;
+  }
 
   /**
    * @param id
@@ -194,6 +207,24 @@ public class BaseRepositoryMeta {
    */
   public void setDescription( String description ) {
     this.description = description;
+  }
+  
+  /*
+   * (non-Javadoc)
+   *
+   * @see org.pentaho.di.repository.RepositoryMeta#isDefault()
+   */
+  public Boolean isDefault() {
+    return isDefault;
+  }
+
+  /*
+   * (non-Javadoc)
+   *
+   * @see org.pentaho.di.repository.RepositoryMeta#setDefault(java.lang.Boolean)
+   */
+  public void setDefault( Boolean isDefault ) {
+    this.isDefault = isDefault;
   }
 
   /*

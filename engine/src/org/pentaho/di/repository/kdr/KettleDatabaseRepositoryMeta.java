@@ -22,6 +22,7 @@
 
 package org.pentaho.di.repository.kdr;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -110,6 +111,14 @@ public class KettleDatabaseRepositoryMeta extends BaseRepositoryMeta implements 
 
   public String getDescription() {
     return description;
+  }
+
+  public Boolean isDefault() {
+    return isDefault;
+  }
+
+  public void setDefault( Boolean isDefault ) {
+    this.isDefault = isDefault;
   }
 
   public void setConnection( DatabaseMeta connection ) {

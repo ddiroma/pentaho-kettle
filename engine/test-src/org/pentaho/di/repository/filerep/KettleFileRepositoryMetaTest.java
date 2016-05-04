@@ -22,8 +22,7 @@
 
 package org.pentaho.di.repository.filerep;
 
-import static org.junit.Assert.*;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,18 +50,17 @@ public class KettleFileRepositoryMetaTest {
     properties.put( "displayName", NAME );
     properties.put( "showHiddenFolders", true );
     properties.put( "description", DESCRIPTION );
+    properties.put( "isDefaultOnStartup", true );
     properties.put( "location", THIS_IS_THE_PATH );
     properties.put( "doNotModify", true );
-    properties.put( "isDefault", true );
 
     kettleFileRepositoryMeta.populate( properties );
 
-    assertEquals( NAME, kettleFileRepositoryMeta.getName() );
-    assertEquals( true, kettleFileRepositoryMeta.isHidingHiddenFiles() );
-    assertEquals( DESCRIPTION, kettleFileRepositoryMeta.getDescription() );
-    assertEquals( THIS_IS_THE_PATH, kettleFileRepositoryMeta.getBaseDirectory() );
-    assertEquals( true, kettleFileRepositoryMeta.isReadOnly() );
-    assertEquals( true, kettleFileRepositoryMeta.isDefault() );
+    Assert.assertEquals( NAME, kettleFileRepositoryMeta.getName() );
+    Assert.assertEquals( true, kettleFileRepositoryMeta.isHidingHiddenFiles() );
+    Assert.assertEquals( DESCRIPTION, kettleFileRepositoryMeta.getDescription() );
+    Assert.assertEquals( THIS_IS_THE_PATH, kettleFileRepositoryMeta.getBaseDirectory() );
+    Assert.assertEquals( true, kettleFileRepositoryMeta.isReadOnly() );
   }
 
 }
