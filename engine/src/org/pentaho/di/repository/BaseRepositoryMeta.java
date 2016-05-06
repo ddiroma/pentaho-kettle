@@ -95,7 +95,7 @@ public class BaseRepositoryMeta {
     this.name = name;
     this.description = description;
   }
-
+  
   /**
    * @param id
    * @param name

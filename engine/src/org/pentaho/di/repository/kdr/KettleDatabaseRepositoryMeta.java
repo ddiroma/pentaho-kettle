@@ -22,6 +22,7 @@
 
 package org.pentaho.di.repository.kdr;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

@@ -25,6 +25,7 @@ package org.pentaho.di.repository.filerep;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -136,7 +137,7 @@ public class KettleFileRepository extends AbstractRepository {
   @Override public boolean test() {
     return new File( this.repositoryMeta.getBaseDirectory() ).exists();
   }
-
+  
   public void disconnect() {
     this.metaStore = null;
     connected = false;
