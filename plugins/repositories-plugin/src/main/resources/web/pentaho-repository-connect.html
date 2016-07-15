@@ -14,7 +14,8 @@
       <input set-focus="model.username!=''" id="password" class="block repo_conn_txt" type="password" ng-model="model.password" ng-change="resetErrorMsg()"/>
     </div>
     <div>
-      <button id="connect" class="standard" type="submit" ng-disabled="!canConnect()" ng-click="connect()">Connect</button>
+      <button id="connect" class="standard margin_bottom_10" type="submit" ng-disabled="!canConnect()" ng-click="connect()">Connect</button>
+      <button id="backBtn" class="standard" type="submit" ng-class="{invisible : !model.fromConnectionManager}" ng-click="back()">Back</button>
     </div>
     </form>
   </div>

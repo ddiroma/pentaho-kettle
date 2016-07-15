@@ -83,6 +83,7 @@ define( [
       this.username = "";
       this.password = "";
       this.currentRepositoryName = "";
+      this.fromConnectionManager = false;
     });
 
 });

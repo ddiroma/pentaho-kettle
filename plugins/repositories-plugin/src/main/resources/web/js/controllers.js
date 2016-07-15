@@ -348,7 +348,7 @@ define(
       }
     });
 
-    repoConnectionAppControllers.controller("RepositoryManagerController", function($scope, $rootScope, $location, repositoriesModel, pentahoRepositoryModel, kettleFileRepositoryModel, kettleDatabaseRepositoryModel) {
+    repoConnectionAppControllers.controller("RepositoryManagerController", function($scope, $rootScope, $location, repositoryConnectModel, repositoriesModel, pentahoRepositoryModel, kettleFileRepositoryModel, kettleDatabaseRepositoryModel) {
       $scope.model = repositoriesModel;
       $scope.selectRepository = function(repository) {
         repositoriesModel.selectedRepository = repository;
@@ -361,6 +361,24 @@ define(
           } else {
             repositoriesModel.repositories[i].isDefault = false;
           }
+        }
+      }
+      $scope.connect = function(repository) {
+        var repositoryString = loadRepository(repository.displayName);
+        var repository = JSON.parse(repositoryString);
+        if (repository.id == "KettleFileRepository") {
+          kettleFileRepositoryModel.model = repository;
+          connectToRepository();
+        } else if (repository.id == "KettleDatabaseRepository") {
+          kettleDatabaseRepositoryModel.model = repository;
+          repositoryConnectModel.fromConnectionManager = true;
+          $location.path("/repository-connect");
+          $rootScope.next();
+        } else {
+          pentahoRepositoryModel.model = repository;
+          repositoryConnectModel.fromConnectionManager = true;
+          $location.path("/repository-connect");
+          $rootScope.next();
         }
       }
       $scope.edit = function(repository) {
@@ -385,6 +403,7 @@ define(
             this.model.repositories.splice(i, 1);
           }
         }
+        repositoriesModel.selectedRepository = null;
       }
       $scope.add = function() {
         $location.path("/pentaho-repository");
@@ -398,7 +417,7 @@ define(
       }
     });
 
-    repoConnectionAppControllers.controller("RepositoryConnectController", function($scope, $rootScope, repositoryConnectModel) {
+    repoConnectionAppControllers.controller("RepositoryConnectController", function($scope, $rootScope, $location, repositoryConnectModel) {
       $scope.model = repositoryConnectModel;
       $scope.model.username = getCurrentUser();
       $scope.model.currentRepositoryName = getCurrentRepository();
@@ -410,6 +429,10 @@ define(
       }
       $scope.resetErrorMsg = function() {
         $rootScope.resetErrorMsg();
+      }
+      $scope.back = function() {
+        $location.path("/repository-manager");
+        $rootScope.back();
       }
       $scope.connect = function() {
         if( $rootScope.hasError ){

@@ -3,7 +3,7 @@
   <div id="table-wrapper" class="margin_bottom_20 table_border">
     <div id="table-scroll">
       <table id="repoMngTable">
-        <tr ng-repeat="repository in model.repositories" ng-class="{active : repository === model.selectedRepository}"  ng-click="selectRepository(repository)">
+        <tr ng-repeat="repository in model.repositories" ng-class="{active : repository === model.selectedRepository}"  ng-click="selectRepository(repository)" ng-Dblclick="connect(repository)">
           <td class="bullet" />
           <td class="repo_type text_left">
             <div class="repoType">{{repository.displayName}}</div>
@@ -21,6 +21,7 @@
     <button id="deleteBtn" class="right margin_left_10 secondary" type="button" ng-class="{invisible : !model.selectedRepository || model.repositories.length == 0}" ng-click="delete(model.selectedRepository)">Delete</button>
     <button id="editBtn" class="right secondary" type="button" style="margin-left: 85px;" ng-class="{invisible : !model.selectedRepository || model.repositories.length == 0}" ng-click="edit(model.selectedRepository)">Edit</button>
     <button id="addBtn" class="right standard" type="button" ng-click="add()">Add</button>
+    <button id="connectBtn" class="left secondary" type="button" ng-class="{invisible : !model.selectedRepository || model.repositories.length == 0}" ng-click="connect(model.selectedRepository)">Connect</button>
   </div>
   <div class="bottom">
     <div class="margin_bottom_20">
