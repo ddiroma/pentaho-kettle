@@ -3,7 +3,8 @@
   <div class="middle_div margin_bottom_10">
     <div class="margin_bottom_15">
       <label for="displayName" class="margin_bottom_5 block text_left">Display Name</label>
-      <input set-focus id="displayName" class="block" type="text" size="50" ng-model="model.displayName" ng-change="resetErrorMsg()"/>
+      <input set-focus id="displayName" class="block" type="text" size="50"
+      maxlength="20" ng-model="model.displayName" ng-change="resetErrorMsg()"/>
     </div>
     <div class="margin_bottom_15">
       <label for="url" class="margin_bottom_5 block text_left">URL</label>
