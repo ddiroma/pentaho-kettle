@@ -401,6 +401,7 @@ define(
       $scope.help = function() {
         help();
       }
+      $scope.addToolTips = addToolTips;
     });
 
     repoConnectionAppControllers.controller("RepositoryConnectController", function($scope, $rootScope, repositoryConnectModel) {
@@ -428,6 +429,19 @@ define(
           close();
         }
       }
+      $scope.addToolTips = addToolTips;
     });
+    
+    function addToolTips() {
+      var eles = document.querySelectorAll('.mightOverflow');
+      setTimeout(function() {
+        for (var i = 0; i < eles.length; i++) {
+          var ele = eles[i];
+          if (ele.offsetWidth < ele.scrollWidth) {
+            ele.title = ele.innerText;
+          }
+        }
+      });
+    }
   }
 );
