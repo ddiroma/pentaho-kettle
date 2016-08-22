@@ -93,13 +93,16 @@ import org.pentaho.di.core.row.ValueMeta;
 import org.pentaho.di.core.row.ValueMetaInterface;
 import org.pentaho.di.core.row.value.ValueMetaBase;
 import org.pentaho.di.core.row.value.ValueMetaBigNumber;
+import org.pentaho.di.core.row.value.ValueMetaBinary;
 import org.pentaho.di.core.row.value.ValueMetaBoolean;
 import org.pentaho.di.core.row.value.ValueMetaDate;
 import org.pentaho.di.core.row.value.ValueMetaFactory;
 import org.pentaho.di.core.row.value.ValueMetaInteger;
+import org.pentaho.di.core.row.value.ValueMetaInternetAddress;
 import org.pentaho.di.core.row.value.ValueMetaNone;
 import org.pentaho.di.core.row.value.ValueMetaNumber;
 import org.pentaho.di.core.row.value.ValueMetaString;
+import org.pentaho.di.core.row.value.ValueMetaTimestamp;
 import org.pentaho.di.core.variables.VariableSpace;
 import org.pentaho.di.core.variables.Variables;
 import org.pentaho.di.core.vfs.KettleVFS;
@@ -2132,31 +2135,15 @@ public class Database implements VariableSpace, LoggingObjectInterface {
     // For now, we just try to get the field layout on the re-bound in the
     // exception block below.
     //
-    if ( databaseMeta.supportsPreparedStatementMetadataRetrieval() ) {
-      // On with the regular program.
-      //
-
-      PreparedStatement preparedStatement = null;
-      try {
-        preparedStatement =
-          connection.prepareStatement(
-            databaseMeta.stripCR( sql ), ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY );
-        preparedStatement.setMaxRows( 1 );
-        ResultSetMetaData rsmd = preparedStatement.getMetaData();
-        fields = getRowInfo( rsmd, false, false );
-      } catch ( Exception e ) {
-        fields = getQueryFieldsFallback( sql, param, inform, data );
-      } finally {
-        if ( preparedStatement != null ) {
-          try {
-            preparedStatement.close();
-          } catch ( SQLException e ) {
-            throw new KettleDatabaseException(
-              "Unable to close prepared statement after determining SQL layout", e );
-          }
-        }
+    try {
+      if ( databaseMeta.supportsPreparedStatementMetadataRetrieval() ) {
+        // On with the regular program.
+        //
+        fields = getQueryFieldsFromPreparedStatement( sql );
+      } else {
+        fields = getQueryFieldsFromDatabaseMetaData();
       }
-    } else {
+    } catch ( Exception e ) {
       /*
        * databaseMeta.getDatabaseType()==DatabaseMeta.TYPE_DATABASE_SYBASEIQ ) {
        */
@@ -2173,7 +2160,76 @@ public class Database implements VariableSpace, LoggingObjectInterface {
     return fields;
   }
 
-  private RowMetaInterface getQueryFieldsFallback( String sql, boolean param, RowMetaInterface inform,
+  public RowMetaInterface getQueryFieldsFromPreparedStatement( String sql ) throws Exception {
+    PreparedStatement preparedStatement = null;
+    try {
+      preparedStatement =
+          connection.prepareStatement( databaseMeta.stripCR( sql ), ResultSet.TYPE_FORWARD_ONLY,
+              ResultSet.CONCUR_READ_ONLY );
+      preparedStatement.setMaxRows( 1 );
+      ResultSetMetaData rsmd = preparedStatement.getMetaData();
+      return getRowInfo( rsmd, false, false );
+    } catch ( Exception e ) {
+      throw new Exception( e );
+    } finally {
+      if ( preparedStatement != null ) {
+        try {
+          preparedStatement.close();
+        } catch ( SQLException e ) {
+          throw new KettleDatabaseException( "Unable to close prepared statement after determining SQL layout", e );
+        }
+      }
+    }
+  }
+
+  public RowMetaInterface getQueryFieldsFromDatabaseMetaData() throws Exception {
+
+    ResultSet columns = connection.getMetaData().getColumns( "", "", databaseMeta.getName(), "" );
+    RowMetaInterface rowMeta = new RowMeta();
+    while ( columns.next() ) {
+      ValueMetaInterface valueMeta = null;
+      String name = columns.getString( "COLUMN_NAME" );
+      String type = columns.getString( "SOURCE_DATA_TYPE" );
+      int size = columns.getInt( "COLUMN_SIZE" );
+      if ( type.equals( "Integer" ) || type.equals( "Long" ) ) {
+        valueMeta = new ValueMetaInteger();
+      } else if ( type.equals( "BigDecimal" ) || type.equals( "BigNumber" ) ) {
+        valueMeta = new ValueMetaBigNumber();
+      } else if ( type.equals( "Double" ) || type.equals( "Number" ) ) {
+        valueMeta = new ValueMetaNumber();
+      } else if ( type.equals( "String" ) ) {
+        valueMeta = new ValueMetaString();
+      } else if ( type.equals( "Date" ) ) {
+        valueMeta = new ValueMetaDate();
+      } else if ( type.equals( "Boolean" ) ) {
+        valueMeta = new ValueMetaBoolean();
+      } else if ( type.equals( "Binary" ) ) {
+        valueMeta = new ValueMetaBinary();
+      } else if ( type.equals( "Timestamp" ) ) {
+        valueMeta = new ValueMetaTimestamp();
+      } else if ( type.equals( "Internet Address" ) ) {
+        valueMeta = new ValueMetaInternetAddress();
+      }
+      if ( valueMeta != null ) {
+        valueMeta.setName( name );
+        valueMeta.setComments( name );
+        valueMeta.setLength( size );
+        valueMeta.setOriginalColumnTypeName( type );
+        rowMeta.addValueMeta( valueMeta );
+      } else {
+        log.logBasic( "Database.getQueryFields() ValueMetaInterface mapping not resolved for the column " + name );
+        rowMeta = null;
+        break;
+      }
+    }
+    if ( rowMeta != null && !rowMeta.isEmpty() ) {
+      return rowMeta;
+    } else {
+      throw new Exception( "Error in Database.getQueryFields()" );
+    }
+  }
+
+  public RowMetaInterface getQueryFieldsFallback( String sql, boolean param, RowMetaInterface inform,
                                                    Object[] data ) throws KettleDatabaseException {
     RowMetaInterface fields;
 

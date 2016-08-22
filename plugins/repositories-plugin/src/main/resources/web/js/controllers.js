@@ -110,7 +110,7 @@ define(
       $scope.help = function() {
         help();
       }
-      $scope.successText = $rootScope.fromEdit ? "Your connection has been edited and is ready to use" : "Your connection was created and is ready to use.";
+      $scope.successText = $rootScope.fromEdit ? "Your connection has been edited and is ready to use." : "Your connection was created and is ready to use.";
     });
 
     repoConnectionAppControllers.controller("KettleFileRepositoryController", function($scope, $rootScope, $location, $filter, kettleFileRepositoryModel) {
@@ -184,7 +184,7 @@ define(
       $scope.help = function() {
         help();
       }
-      $scope.successText = $rootScope.fromEdit ? "Your connection has been edited and is ready to use" : "Your Kettle file repository was created and is ready to use.";
+      $scope.successText = $rootScope.fromEdit ? "Your connection has been edited and is ready to use." : "Your Kettle file repository was created and is ready to use.";
     });
 
     repoConnectionAppControllers.controller("KettleDatabaseRepositoryController", function($scope, $rootScope, $location, $filter, kettleDatabaseRepositoryModel) {
@@ -234,7 +234,7 @@ define(
         $rootScope.next();
       }
       $scope.createNewConnection = function() {
-        $location.path("/repository-manager");
+        $location.path("/repository-manager"); 
         $rootScope.next();
         reset();
       }
@@ -261,7 +261,7 @@ define(
       $scope.help = function() {
         help();
       }
-      $scope.successText = $rootScope.fromEdit ? "Your connection has been edited and is ready to use" : "Your Kettle database repository was created and is ready to use.";
+      $scope.successText = $rootScope.fromEdit ? "Your connection has been edited and is ready to use." : "Your Kettle database repository was created and is ready to use.";
     });
 
     repoConnectionAppControllers.controller("CreateNewConnectionController", function($scope, $location, $rootScope, repositoryTypesModel, kettleDatabaseRepositoryModel, kettleFileRepositoryModel) {
