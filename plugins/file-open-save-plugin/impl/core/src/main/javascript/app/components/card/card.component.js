@@ -33,6 +33,7 @@ define([
 
   var options = {
     bindings: {
+      file: '<'
     },
     template: cardTemplate,
     controllerAs: "vm",

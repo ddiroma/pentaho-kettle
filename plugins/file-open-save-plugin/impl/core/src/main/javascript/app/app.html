@@ -10,13 +10,13 @@
       </div>
       <div class="headerSearch">
         <div class="headerSearchLeft"></div>
-        <input type="text" class="searchBox" placeholder="{{::vm.searchPlaceholder}} {{::vm.selectedFolder}}"/>
+        <input type="text" class="searchBox" placeholder="{{::vm.searchPlaceholder}} {{vm.selectedFolder}}" ng-change="vm.doSearch()" ng-model="vm.search"/>
         <div class="headerSearchRight"></div>
       </div>
     </div>
     <div class="headerBottom">
       <div class="breadcrumbSection blueText">
-        <!-- ------------------------- Use breadcrumb component here ------------------------- -->
+        <breadcrumb path="vm.folder.path" on-select="vm.selectFolderByPath(selectedPath)"></breadcrumb>
       </div>
       <div class="addDelete">
         <div class="addFolder"></div>
@@ -27,6 +27,7 @@
   <div class="middle">
     <div class="directoryTreeArea">
       <!-- ------------------------- Use folder component here ------------------------- -->
+      <folder folders="vm.folders" on-select="vm.selectFolder(selectedFolder)" on-open="vm.openFolder(openFolder)" show-recents="vm.showRecents" selected-folder="vm.folder"></folder>
     </div>
 
     <div class="fileArea fileList">
@@ -38,6 +39,8 @@
       <!-- ------------------------- FILES/SEARCH LIST or RECENT FILE CARDS  ------------------------- -->
       <div class="fileAreaResultsView">
         <!-- ------------------------- Use files OR card component here ------------------------- -->
+        <card ng-show="vm.showRecents" ng-repeat="recent in vm.recentFiles" file="recent"></card>
+        <files ng-show="!vm.showRecents" folder="vm.folder" on-click="vm.selectFile(file)"></files>
       </div>
     </div>
   </div>

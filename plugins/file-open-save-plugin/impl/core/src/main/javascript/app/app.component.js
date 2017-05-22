@@ -26,32 +26,102 @@
  * This provides the main component for supporting the file open and save functionality.
  **/
 define([
+  "./services/data.service",
   "text!./app.html",
   "css!./app.css"
-], function(template) {
+], function(dataService, template) {
   "use strict";
 
   var options = {
-    bindings: {
-
-    },
+    bindings: {},
     template: template,
     controllerAs: "vm",
     controller: appController
   };
 
-  function appController() {
+  appController.$inject = [dataService.name];
+
+  function appController(dt) {
     var vm = this;
     vm.$onInit = onInit;
+    vm.selectFolder = selectFolder;
+    vm.selectFile = selectFile;
+    vm.selectFolderByPath = selectFolderByPath;
+    vm.doSearch = doSearch;
+    vm.search = "";
 
     function onInit() {
       vm.wrapperClass = "open";
       vm.headerTitle = "Save";//i18n.get("file-open-save-plugin.app.header.save.title");
       vm.searchPlaceholder = "Search";//i18n.get("file-open-save-plugin.app.header.search.placeholder");
-      vm.selectedFolder = "MyFolder";//i18n.get("file-open-save-plugin.app.header.save.title");
+      vm.selectedFolder = "Recents";//i18n.get("file-open-save-plugin.app.header.save.title");
       vm.confirmButton = "Save";//i18n.get("file-open-save-plugin.app.save.button");
       vm.cancelButton = "Cancel";//i18n.get("file-open-save-plugin.app.cancel.button");
       vm.saveFileNameLabel = "File name";//i18n.get("file-open-save-plugin.app.save.file-name.label");
+      vm.showRecents = true;
+      vm.folder = {name: "Recents", path: "Recents"};
+      dt.getDirectoryTree().then(populateTree);
+      dt.getRecentFiles().then(populateRecentFiles);
+
+      function populateTree(response) {
+        vm.folders = response.data;
+        for (var i = 0; i < vm.folders.length; i++) {
+          if (vm.folders[i].depth === 0) {
+            vm.folders[i].visible = true;
+          }
+        }
+      }
+
+      function populateRecentFiles(response) {
+        vm.recentFiles = response.data;
+      }
+
+    }
+
+    function selectFolder(folder) {
+      if (folder) {
+        vm.showRecents = false;
+        vm.folder = folder;
+        vm.selectedFolder = folder.name;
+      } else {
+        vm.showRecents = true;
+        vm.selectedFolder = "Recents";
+        vm.folder = {name: "Recents", path: "Recents"};
+      }
+    }
+
+    function selectFolderByPath(path) {
+      for (var i = 0; i < vm.folders.length; i++) {
+        if (vm.folders[i].path===path) {
+          selectFolder(vm.folders[i]);
+        }
+      }
+    }
+
+    function selectFile(file) {
+      if (file.type === "folder") {
+        selectFolder(file);
+      } else {
+        dt.openFile(file.objectId.id, file.type);
+      }
+    }
+
+    function doSearch() {
+      if (vm.showRecents === true) {
+        for (var i = 0; i < vm.recentFiles.length; i++) {
+          var name = vm.recentFiles[i].name.toLowerCase();
+          vm.recentFiles[i].inResult = name.indexOf(vm.search.toLowerCase()) !== -1;
+        }
+      } else {
+        for (var i = 0; i < vm.folder.children.length; i++) {
+          var name = vm.folder.children[i].name.toLowerCase();
+          vm.folder.children[i].inResult = name.indexOf(vm.search.toLowerCase()) !== -1;
+        }
+        for (i = 0; i < vm.folder.files.length; i++) {
+          var name = vm.folder.files[i].name.toLowerCase();
+          vm.folder.files[i].inResult = name.indexOf(vm.search.toLowerCase()) !== -1;
+        }
+      }
     }
   }
 
