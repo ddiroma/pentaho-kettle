@@ -49,15 +49,20 @@ define([
     vm.selectFolderByPath = selectFolderByPath;
     vm.doSearch = doSearch;
     vm.search = "";
+    vm.selectedFolder = "";
+    vm.openOrSave = openOrSave;
+    vm.cancel = cancel;
+    vm.fileToSave = "";
 
     function onInit() {
-      vm.wrapperClass = "open";
+      vm.wrapperClass = "save";
       vm.headerTitle = "Save";//i18n.get("file-open-save-plugin.app.header.save.title");
       vm.searchPlaceholder = "Search";//i18n.get("file-open-save-plugin.app.header.search.placeholder");
       vm.selectedFolder = "Recents";//i18n.get("file-open-save-plugin.app.header.save.title");
       vm.confirmButton = "Save";//i18n.get("file-open-save-plugin.app.save.button");
       vm.cancelButton = "Cancel";//i18n.get("file-open-save-plugin.app.cancel.button");
       vm.saveFileNameLabel = "File name";//i18n.get("file-open-save-plugin.app.save.file-name.label");
+      vm.isInSearch = false;
       vm.showRecents = true;
       vm.folder = {name: "Recents", path: "Recents"};
       dt.getDirectoryTree().then(populateTree);
@@ -75,7 +80,6 @@ define([
       function populateRecentFiles(response) {
         vm.recentFiles = response.data;
       }
-
     }
 
     function selectFolder(folder) {
@@ -92,7 +96,7 @@ define([
 
     function selectFolderByPath(path) {
       for (var i = 0; i < vm.folders.length; i++) {
-        if (vm.folders[i].path===path) {
+        if (vm.folders[i].path === path) {
           selectFolder(vm.folders[i]);
         }
       }
@@ -122,11 +126,28 @@ define([
           vm.folder.files[i].inResult = name.indexOf(vm.search.toLowerCase()) !== -1;
         }
       }
-    }
-  }
 
-  return {
-    name: "fileOpenSaveApp",
-    options: options
-  };
+      function openOrSave() {
+        if (vm.wrapperClass === "open") {
+          open();
+        } else {
+          save();
+        }
+      }
+
+      function open() {
+      }
+
+      function save() {
+      }
+
+      function cancel() {
+      }
+    }
+
+    return {
+      name: "fileOpenSaveApp",
+      options: options
+    };
+  }
 });

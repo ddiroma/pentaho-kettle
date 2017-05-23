@@ -8,10 +8,14 @@
       <div class="headerTitle headerText">
         {{::vm.headerTitle}}
       </div>
-      <div class="headerSearch">
-        <div class="headerSearchLeft"></div>
-        <input type="text" class="searchBox" placeholder="{{::vm.searchPlaceholder}} {{vm.selectedFolder}}" ng-change="vm.doSearch()" ng-model="vm.search"/>
-        <div class="headerSearchRight"></div>
+      <div class="headerSearch" ng-class="{'focused' : vm.isInSearch === true}">
+        <div class="headerSearchLeft" ng-class="{'blueState' : vm.searchString !== '' || vm.isInSearch === true }" ></div>
+        <input type="text" class="searchBox" placeholder="{{::vm.searchPlaceholder}} {{vm.selectedFolder}}"
+            ng-blur="vm.isInSearch = false"
+            ng-focus="vm.isInSearch = true"
+            ng-change="vm.doSearch()"
+            ng-model="vm.searchString"/>
+        <div class="headerSearchRight" ng-click="vm.searchString = ''"></div>
       </div>
     </div>
     <div class="headerBottom">
@@ -49,11 +53,12 @@
       <div class="fileNameEntryLabel">
         <label for="fileNameEntryTextBox">{{::vm.saveFileNameLabel}}</label>
       </div>
-      <input id="fileNameEntryTextBox" type="text" class="fileNameEntryTextBox"/>
+      <input id="fileNameEntryTextBox" type="text" class="fileNameEntryTextBox"
+      ng-model="vm.fileToSave"/>
     </div>
     <div class="buttons">
-      <button class="secondary">{{::vm.cancelButton}}</button>
-      <button class="primary">{{::vm.confirmButton}}</button>
+      <button class="secondary" ng-click="vm.cancel()">{{::vm.cancelButton}}</button>
+      <button class="primary" ng-click="vm.openOrSave()">{{::vm.confirmButton}}</button>
     </div>
   </div>
 </div>
