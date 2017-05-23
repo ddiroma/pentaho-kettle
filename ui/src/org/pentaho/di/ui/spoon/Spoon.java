@@ -4065,7 +4065,7 @@ public class Spoon extends ApplicationWindow implements AddUndoPositionInterface
     }
   }
 
-  private void loadObjectFromRepository(
+  public void loadObjectFromRepository(
       ObjectId objectId, RepositoryObjectType objectType, String revision ) throws Exception {
     // Try to open the selected transformation.
     if ( objectType.equals( RepositoryObjectType.TRANSFORMATION ) ) {
@@ -5117,7 +5117,11 @@ public class Spoon extends ApplicationWindow implements AddUndoPositionInterface
     return saveToRepository( meta, meta.getObjectId() == null );
   }
 
-  public boolean saveToRepository( EngineMetaInterface meta, boolean ask_name ) throws KettleException {
+  public boolean saveToRepository( EngineMetaInterface meta, boolean ask_name) throws KettleException {
+    return saveToRepository( meta, ask_name, true );
+  }
+
+  public boolean saveToRepository( EngineMetaInterface meta, boolean ask_name, boolean showProperties ) throws KettleException {
 
     // Verify repository security first...
     //
@@ -5156,11 +5160,13 @@ public class Spoon extends ApplicationWindow implements AddUndoPositionInterface
           mb.open();
         }
         ask = false;
-        if ( meta instanceof TransMeta ) {
-          answer = TransGraph.editProperties( (TransMeta) meta, this, rep, false );
-        }
-        if ( meta instanceof JobMeta ) {
-          answer = JobGraph.editProperties( (JobMeta) meta, this, rep, false );
+        if ( showProperties ) {
+          if ( meta instanceof TransMeta ) {
+            answer = TransGraph.editProperties( (TransMeta) meta, this, rep, false );
+          }
+          if ( meta instanceof JobMeta ) {
+            answer = JobGraph.editProperties( (JobMeta) meta, this, rep, false );
+          }
         }
       }
 

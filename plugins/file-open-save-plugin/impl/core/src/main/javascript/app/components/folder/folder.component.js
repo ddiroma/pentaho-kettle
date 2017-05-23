@@ -28,11 +28,16 @@
 define([
   "text!./folder.html",
   "css!./folder.css"
-], function(folderTemplate) {
+], function (folderTemplate) {
   "use strict";
 
   var options = {
     bindings: {
+      folders: '<',
+      onSelect: '&',
+      onOpen: '&',
+      showRecents: '<',
+      selectedFolder: '<'
     },
     template: folderTemplate,
     controllerAs: "vm",
@@ -42,8 +47,88 @@ define([
   function folderController() {
     var vm = this;
     vm.$onInit = onInit;
+    vm.$onChanges = onChanges;
+    vm.selectFolder = selectFolder;
+    vm.openFolder = openFolder;
+    vm.selectAndOpenFolder = selectAndOpenFolder;
 
     function onInit() {
+    }
+
+    function onChanges(changes) {
+      if (changes.selectedFolder) {
+        var selectedFolder = changes.selectedFolder.currentValue;
+        if (selectedFolder && selectedFolder.path) {
+          if (selectedFolder.path !== "Recents") {
+            selectFolderByPath(selectedFolder.path);
+          }
+        }
+      }
+    }
+
+    function isChild(folder, child) {
+      return child.path.indexOf(folder.path) === 0;
+    }
+
+    function selectAndOpenFolder(folder) {
+      openFolder(folder);
+      selectFolder(folder);
+    }
+
+    function openFolder(folder) {
+      if (folder.hasChildren) {
+        folder.open = folder.open !== true;
+      }
+      for (var i = 0; i < vm.folders.length; i++) {
+        if (folder.open === true && vm.folders[i].depth === folder.depth + 1 && isChild(folder, vm.folders[i])) {
+          vm.folders[i].visible = true;
+        } else if (folder.open === false && vm.folders[i].depth > folder.depth && isChild(folder, vm.folders[i])) {
+          vm.folders[i].visible = false;
+          vm.folders[i].open = false;
+        }
+      }
+    }
+
+    function selectFolder(folder) {
+      if (folder === "recents") {
+        vm.showRecents = true;
+        vm.selectedFolder = null;
+      } else {
+        vm.selectedFolder = folder;
+        vm.showRecents = false;
+        vm.folder = folder;
+      }
+      vm.onSelect({selectedFolder: folder});
+    }
+
+    function selectFolderByPath(path) {
+      for (var i = 0; i < vm.folders.length; i++) {
+        if (vm.folders[i].path === path) {
+          selectFolder(vm.folders[i]);
+          openParentFolder(vm.folders[i].parent);
+        }
+      }
+    }
+
+    function openParentFolder(path) {
+      if (path) {
+        for (var i = 0; i < vm.folders.length; i++) {
+          if (path.indexOf(vm.folders[i].path) === 0) {
+            openParentFolders(vm.folders[i]);
+          }
+        }
+      }
+    }
+
+    function openParentFolders(folder) {
+      if (folder.hasChildren) {
+        folder.open = true;
+      }
+      for (var i = 0; i < vm.folders.length; i++) {
+        if (vm.folders[i].parent === folder.path) {
+          vm.folders[i].visible = true;
+        }
+      }
     }
   }
 

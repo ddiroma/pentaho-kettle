@@ -116,6 +116,10 @@ folder .folder.selected .folderImage {
 }
 
 folder .folder .folderName {
+  -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+  -moz-user-select: none; /* mozilla browsers */
+  -khtml-user-select: none; /* webkit (konqueror) browsers */
+  -ms-user-select: none; /* IE10+ */
   height: 20px;
   line-height: 20px;
   margin-left: 10px;

@@ -32,9 +32,10 @@ define([
   "./components/folder/folder.component",
   "./components/error/error.component",
   "./components/breadcrumb/breadcrumb.component",
-  "./components/files/files.component"
+  "./components/files/files.component",
+  "./services/data.service"
 ], function(angular, appComponent, cardComponent,
-            folderComponent, errorComponent, breadcrumbComponent, filesComponent) {
+            folderComponent, errorComponent, breadcrumbComponent, filesComponent, dataService) {
   "use strict";
 
   var module = {
@@ -58,7 +59,8 @@ define([
         .component(folderComponent.name, folderComponent.options)
         .component(errorComponent.name, errorComponent.options)
         .component(breadcrumbComponent.name, breadcrumbComponent.options)
-        .component(filesComponent.name, filesComponent.options);
+        .component(filesComponent.name, filesComponent.options)
+        .service(dataService.name, dataService.factory);
   }
 
   /**

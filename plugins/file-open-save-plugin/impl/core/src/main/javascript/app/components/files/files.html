@@ -3,7 +3,7 @@
      1. fileTable:   STATIC...always present
      2. searchTable: For search results only
 -->
-<table class="fileTable searchTable">
+<table class="fileTable">
   <thead>
   <tr>
     <th>
@@ -21,69 +21,46 @@
   </tr>
   </thead>
   <tbody>
-  <!-- tr's are repeatable -->
-  <tr class="selected">
-    <td>
-      <div class="fileTypeIcon file-trans"></div>
-      <div class="fileName">
-        calls_conversion
-      </div>
-      <div class="fileLocation" title="full path--use title-on-truncate">
-        Home/Folder/transformations/monthly_calls/conversion/calls/conversion/calls
-      </div>
-    </td>
-    <td>
-      <div class="fileType">
-        <span>Transformation</span>
-      </div>
-    </td>
-    <td>
-      <div class="fileLastSaved">
-        <span>12/28/16 3:50 PM</span>
-      </div>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <div class="fileTypeIcon file-job"></div>
-      <div class="fileName">
-        calls_conversion_june
-      </div>
-      <div class="fileLocation" title="full path--use title-on-truncate">
-        Home/Folder/transformations/monthly_calls/conversion/calls/conversion/calls
-      </div>
-    </td>
-    <td>
-      <div class="fileType">
-        <span>Transformation</span>
-      </div>
-    </td>
-    <td>
-      <div class="fileLastSaved">
-        <span>12/28/16 3:50 PM</span>
-      </div>
-    </td>
-  </tr>
-  <tr>
+  <tr ng-repeat="file in vm.folder.children" ng-click="vm.selectFile(file)" ng-dblclick="vm.onClick({file:file})" ng-class="{selected: vm.selectedFile==file}" ng-hide="file.inResult==false">
     <td>
       <div class="fileTypeIcon file-folder"></div>
       <div class="fileName">
-        calls_conversion
+        {{file.name}}
       </div>
-      <div class="fileLocation" title="full path--use title-on-truncate">
-        Home/Folder/transformations/monthly_calls/conversion/calls/conversion/calls
-      </div>
+      <!--<div class="fileLocation" title="full path&#45;&#45;use title-on-truncate">-->
+        <!--{{file.path}}-->
+      <!--</div>-->
     </td>
     <td>
       <div class="fileType">
-        <span>Transformation</span>
+        <span>{{file.type}}</span>
       </div>
     </td>
     <td>
       <div class="fileLastSaved">
-        <span>12/28/16 3:50 PM</span>
+        <span>{{file.date | date:'MM/dd/yy hh:mm a'}}</span>
       </div>
     </td>
   </tr>
-  </tbody>
+  <tr ng-repeat="file in vm.folder.files" ng-click="vm.selectFile(file)" ng-dblclick="vm.onClick({file:file})" ng-class="{selected: vm.selectedFile==file}" ng-hide="file.inResult==false">
+    <td>
+      <div class="fileTypeIcon file-trans"></div>
+      <div class="fileName">
+        {{file.name}}
+      </div>
+      <!--<div class="fileLocation" title="full path&#45;&#45;use title-on-truncate">-->
+      <!--{{file.path}}-->
+      <!--</div>-->
+    </td>
+    <td>
+      <div class="fileType">
+        <span>{{file.type}}</span>
+      </div>
+    </td>
+    <td>
+      <div class="fileLastSaved">
+        <span>{{file.date | date:'MM-dd-yy hh:mm a'}}</span>
+      </div>
+    </td>
+  </tr>
 </table>

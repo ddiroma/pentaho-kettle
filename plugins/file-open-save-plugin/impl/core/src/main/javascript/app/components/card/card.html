@@ -3,11 +3,11 @@
      1. cardTrans:  Transformation
      2. cardJob:    Job
 -->
-<div class="card cardTrans" title="trans1&#013;Home/Stuff/Folder/transformation 1">
+<div class="card" ng-class="{cardTrans: vm.file.type=='transformation', cardJob: vm.file.type=='job'}" title="{{vm.file.name}}&#013;{{vm.file.path}}"  ng-hide="vm.file.inResult==false">
   <div class="cardMiddle">
     <div class="cardTitleAndDate">
-      <div class="cardTitle">trans 341</div>
-      <div class="cardDate">12/28/16 3:50 PM</div>
+      <div class="cardTitle">{{vm.file.name}}</div>
+      <div class="cardDate">{{vm.file.date | date:'MM/dd/yy hh:mm a'}}</div>
     </div>
     <div class="cardTypeIcon"></div>
   </div>

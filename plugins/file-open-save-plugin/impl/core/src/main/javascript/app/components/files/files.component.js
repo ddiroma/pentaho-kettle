@@ -32,6 +32,8 @@ define([
 
   var options = {
     bindings: {
+      folder: '<',
+      onClick: '&'
     },
     template: filesTemplate,
     controllerAs: "vm",
@@ -41,11 +43,23 @@ define([
   function filesController() {
     var vm = this;
     vm.$onInit = onInit;
+    vm.$onChanges = onChanges;
+    vm.selectFile = selectFile;
 
     function onInit() {
       vm.nameHeader = "Name";
       vm.typeHeader = "Type";
       vm.lastSaveHeader = "Last saved";
+    }
+
+    function onChanges(changes) {
+      if (changes.folder) {
+        vm.selectedFile = null;
+      }
+    }
+
+    function selectFile(file) {
+      vm.selectedFile = file;
     }
   }
 
