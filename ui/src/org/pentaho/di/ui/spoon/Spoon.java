@@ -4276,6 +4276,12 @@ public class Spoon extends ApplicationWindow implements AddUndoPositionInterface
           openFile( filename, importfile );
         }
       } else {
+        // Uncomment when repository save/open is complete
+//        try {
+//          ExtensionPointHandler.callExtensionPoint( log, KettleExtensionPoint.SpoonOpenRepository.id, null );
+//        } catch ( KettleException ke ) {
+//          // Ignore
+//        }
         SelectObjectDialog sod = new SelectObjectDialog( shell, rep );
         if ( sod.open() != null ) {
           RepositoryObjectType type = sod.getObjectType();

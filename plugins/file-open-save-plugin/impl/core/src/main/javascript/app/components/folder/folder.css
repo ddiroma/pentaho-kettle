@@ -32,16 +32,16 @@ folder .folder:hover {
 }
 
 folder .folder.recents {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 folder .folder.public {
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 folder .folder.opened {
-  margin-bottom: 5px;
+  /*margin-bottom: 5px;*/
 }
 
 folder .folder.selected {

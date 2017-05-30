@@ -1,3 +1,18 @@
+/*
+ * Copyright 2017 Pentaho Corporation. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ */
+
 package org.pentaho.repo.model;
 
 import java.util.ArrayList;
@@ -8,49 +23,9 @@ import java.util.List;
  */
 public class RepositoryDirectory extends RepositoryObject {
 
-  private List<RepositoryDirectory> children = new ArrayList<>();
-  private List<RepositoryFile> files = new ArrayList<>();
-  private int depth;
-  private String parent;
-  private boolean hasChildren = false;
+  public static String DIRECTORY = "File folder";
 
-  public void addChild( RepositoryDirectory repositoryDirectory ) {
-    this.children.add( repositoryDirectory );
-  }
-
-  public List<RepositoryDirectory> getChildren() {
-    return children;
-  }
-
-  public List<RepositoryFile> getFiles() {
-    return files;
-  }
-
-  public void addFile( RepositoryFile repositoryFile ) {
-    this.files.add( repositoryFile );
-  }
-
-  public int getDepth() {
-    return depth;
-  }
-
-  public void setDepth( int depth ) {
-    this.depth = depth;
-  }
-
-  public String getParent() {
-    return parent;
-  }
-
-  public void setParent( String parent ) {
-    this.parent = parent;
-  }
-
-  public boolean isHasChildren() {
-    return hasChildren;
-  }
-
-  public void setHasChildren( boolean hasChildren ) {
-    this.hasChildren = hasChildren;
+  @Override public String getType() {
+    return DIRECTORY;
   }
 }

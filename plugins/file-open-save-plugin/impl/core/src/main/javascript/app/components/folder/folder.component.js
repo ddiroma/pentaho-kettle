@@ -26,9 +26,10 @@
  * This provides the component for the Folders in the directory tree.
  **/
 define([
+  "../../services/data.service",
   "text!./folder.html",
   "css!./folder.css"
-], function (folderTemplate) {
+], function (dataService, folderTemplate) {
   "use strict";
 
   var options = {
@@ -37,14 +38,17 @@ define([
       onSelect: '&',
       onOpen: '&',
       showRecents: '<',
-      selectedFolder: '<'
+      selectedFolder: '<',
+      autoExpand: '<'
     },
     template: folderTemplate,
     controllerAs: "vm",
     controller: folderController
   };
 
-  function folderController() {
+  folderController.$inject = [dataService.name];
+
+  function folderController(dt) {
     var vm = this;
     vm.$onInit = onInit;
     vm.$onChanges = onChanges;
@@ -71,8 +75,8 @@ define([
     }
 
     function selectAndOpenFolder(folder) {
-      openFolder(folder);
       selectFolder(folder);
+      openFolder(folder);
     }
 
     function openFolder(folder) {
@@ -97,6 +101,14 @@ define([
         vm.selectedFolder = folder;
         vm.showRecents = false;
         vm.folder = folder;
+        // if (vm.folder.loaded != true) {
+        //   vm.folder.loaded = true;
+        //   dt.getFiles(vm.folder.objectId.id).then(function(response){
+        //     for (var i = 0; i < response.data.length; i++) {
+        //       vm.folder.children.push(response.data[i]);
+        //     }
+        //   });
+        // }
       }
       vm.onSelect({selectedFolder: folder});
     }
@@ -105,7 +117,10 @@ define([
       for (var i = 0; i < vm.folders.length; i++) {
         if (vm.folders[i].path === path) {
           selectFolder(vm.folders[i]);
-          openParentFolder(vm.folders[i].parent);
+          if (vm.autoExpand) {
+            openParentFolder(vm.folders[i].parent);
+            vm.autoExpand = false;
+          }
         }
       }
     }
