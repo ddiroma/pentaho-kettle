@@ -39,19 +39,23 @@ define([
     controller: appController
   };
 
-  appController.$inject = [dataService.name];
+  appController.$inject = [dataService.name, "$location"];
 
-  function appController(dt) {
+  function appController(dt, $location) {
     var vm = this;
     vm.$onInit = onInit;
     vm.selectFolder = selectFolder;
     vm.selectFile = selectFile;
     vm.selectFolderByPath = selectFolderByPath;
     vm.doSearch = doSearch;
-    vm.search = "";
-    vm.selectedFolder = "";
+    vm.addFolder = addFolder;
     vm.openOrSave = openOrSave;
     vm.cancel = cancel;
+    vm.highlightFile = highlightFile;
+    vm.remove = remove;
+    vm.setState = setState;
+
+    vm.selectedFolder = "";
     vm.fileToSave = "";
 
     function onInit() {
@@ -59,12 +63,15 @@ define([
       vm.headerTitle = "Save";//i18n.get("file-open-save-plugin.app.header.save.title");
       vm.searchPlaceholder = "Search";//i18n.get("file-open-save-plugin.app.header.search.placeholder");
       vm.selectedFolder = "Recents";//i18n.get("file-open-save-plugin.app.header.save.title");
-      vm.confirmButton = "Save";//i18n.get("file-open-save-plugin.app.save.button");
+      vm.confirmButton = "Open";//i18n.get("file-open-save-plugin.app.save.button");
       vm.cancelButton = "Cancel";//i18n.get("file-open-save-plugin.app.cancel.button");
       vm.saveFileNameLabel = "File name";//i18n.get("file-open-save-plugin.app.save.file-name.label");
       vm.isInSearch = false;
       vm.showRecents = true;
       vm.folder = {name: "Recents", path: "Recents"};
+      vm.file = null;
+      vm.includeRoot = false;
+      vm.autoExpand = false;
       dt.getDirectoryTree().then(populateTree);
       dt.getRecentFiles().then(populateRecentFiles);
 
@@ -75,14 +82,41 @@ define([
             vm.folders[i].visible = true;
           }
         }
+        var path = $location.search().path;
+        if (path) {
+          selectFolderByPath(path);
+          vm.autoExpand = true;
+        }
+        if (vm.folders[0].path === "/") {
+          vm.includeRoot = true;
+        }
       }
 
       function populateRecentFiles(response) {
         vm.recentFiles = response.data;
       }
+
+      var state = $location.search().state;
+      if (state) {
+        vm.setState(state);
+      }
+    }
+
+    function setState(state) {
+      if (state === "open") {
+        vm.wrapperClass = "open";
+        vm.headerTitle = "Open";//i18n.get("file-open-save-plugin.app.header.save.title");
+        vm.confirmButton = "Open";//i18n.get("file-open-save-plugin.app.save.button");
+      }
+      if (state === "save") {
+        vm.wrapperClass = "save";
+        vm.headerTitle = "Save";//i18n.get("file-open-save-plugin.app.header.save.title");
+        vm.confirmButton = "Save";//i18n.get("file-open-save-plugin.app.save.button");
+      }
     }
 
     function selectFolder(folder) {
+      vm.file = null;
       if (folder) {
         vm.showRecents = false;
         vm.folder = folder;
@@ -103,51 +137,127 @@ define([
     }
 
     function selectFile(file) {
-      if (file.type === "folder") {
+      if (file.type === "File folder") {
         selectFolder(file);
       } else {
         dt.openFile(file.objectId.id, file.type);
+        close();
       }
     }
 
     function doSearch() {
       if (vm.showRecents === true) {
-        for (var i = 0; i < vm.recentFiles.length; i++) {
-          var name = vm.recentFiles[i].name.toLowerCase();
-          vm.recentFiles[i].inResult = name.indexOf(vm.search.toLowerCase()) !== -1;
-        }
+        filter(vm.recentFiles, vm.searchString);
       } else {
-        for (var i = 0; i < vm.folder.children.length; i++) {
-          var name = vm.folder.children[i].name.toLowerCase();
-          vm.folder.children[i].inResult = name.indexOf(vm.search.toLowerCase()) !== -1;
-        }
-        for (i = 0; i < vm.folder.files.length; i++) {
-          var name = vm.folder.files[i].name.toLowerCase();
-          vm.folder.files[i].inResult = name.indexOf(vm.search.toLowerCase()) !== -1;
-        }
-      }
-
-      function openOrSave() {
-        if (vm.wrapperClass === "open") {
-          open();
-        } else {
-          save();
-        }
-      }
-
-      function open() {
-      }
-
-      function save() {
-      }
-
-      function cancel() {
+        filter(vm.folder.children, vm.searchString);
       }
     }
 
-    return {
-      name: "fileOpenSaveApp",
-      options: options
-    };
+    function filter(elements, value) {
+      for (var i = 0; i < elements.length; i++) {
+        var name = elements[i].name.toLowerCase();
+        elements[i].inResult = name.indexOf(value.toLowerCase()) !== -1;
+      }
+    }
+
+    function highlightFile(file) {
+      vm.file = file;
+    }
+
+    function openOrSave() {
+      if (vm.file) {
+        if (vm.file.type === "File folder") {
+          selectFolder(vm.file);
+        } else {
+          if (vm.wrapperClass === "open") {
+            open();
+          } else {
+            save();
+          }
+          close();
+        }
+      }
+    }
+
+    function open() {
+      dt.openFile(vm.file.objectId.id, vm.file.type);
+    }
+
+    function save() {
+    }
+
+    function cancel() {
+      close();
+    }
+
+    function remove() {
+      if (vm.file !== null) {
+        dt.remove(vm.file.path, vm.file.type).then(function() {
+          var index = vm.folder.children.indexOf(vm.file);
+          vm.folder.children.splice(index, 1);
+          if (vm.file.type === "File folder") {
+            for (var i = 0; i < vm.folders.length; i++) {
+              if (vm.folders[i].path === vm.file.path) {
+                vm.folders.splice(i, 1);
+                break;
+              }
+            }
+          }
+          var hasChildFolders = false;
+          for ( var i = 0; i < vm.folder.children.length; i++ ) {
+            if (vm.folder.children[i].type === "File folder") {
+              hasChildFolders = true;
+            }
+          }
+          vm.folder.hasChildren = hasChildFolders;
+        });
+      }
+    }
+
+    function addFolder() {
+      dt.create(vm.folder.path, getFolderName()).then(function(response) {
+        vm.folder.hasChildren = true;
+        var folder = response.data;
+        folder.visible = vm.folder.open;
+        folder.depth = vm.folder.depth+1;
+        folder.autoEdit = true;
+        folder.type = "File folder";
+        vm.folder.children.splice(0, 0, folder);
+        for (var i = 0; i < vm.folders.length; i++) {
+          if (vm.folders[i].path === folder.parent) {
+            vm.folders.splice(i+1, 0, angular.copy(folder));
+            break;
+          }
+        }
+      });
+    }
+
+    function getFolderName() {
+      var name = "New Folder";
+      var index = 0;
+      var check = name;
+      var search = true;
+      while (search) {
+        var found = false;
+        for (var i = 0; i < vm.folder.children.length; i++) {
+          if (vm.folder.children[i].name === check) {
+            found = true;
+            break;
+          }
+        }
+        if (found) {
+          index++;
+          check = name + " " + index;
+        } else {
+          search = false;
+        }
+      }
+      return check;
+    }
   }
+
+  return {
+    name: "fileOpenSaveApp",
+    options: options
+  };
 });

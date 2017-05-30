@@ -34,6 +34,7 @@ define([
   var options = {
     bindings: {
       path: '<',
+      includeRoot: '<',
       onSelect: '&'
     },
     template: breadcrumbTemplate,
@@ -65,6 +66,9 @@ define([
       if (path) {
         var parts = path.split("/");
         var set = [];
+        if (vm.includeRoot && path !== "Recents") {
+          set.push({path:"/", part:"/"});
+        }
         for (var i = 0; i < parts.length; i++) {
           if (parts[i] !== "") {
             set.push({path:parts.slice(0, i+1).join("/"), part:parts[i]});

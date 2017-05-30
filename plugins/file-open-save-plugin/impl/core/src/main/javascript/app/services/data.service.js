@@ -1,5 +1,5 @@
 /*!
- * Copyright 2016 Pentaho Corporation. All rights reserved.
+ * Copyright 2017 Pentaho Corporation. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,20 +46,40 @@ define(
         var baseUrl = "/cxf/browser";
         return {
           getDirectoryTree: getDirectoryTree,
+          getFiles: getFiles,
           getRecentFiles: getRecentFiles,
-          openFile: openFile
+          openFile: openFile,
+          rename: rename,
+          create: create,
+          remove: remove
         };
 
         function getDirectoryTree() {
           return _httpGet([baseUrl, "loadDirectoryTree"].join("/"));
         }
 
+        function getFiles(id) {
+          return _httpGet([baseUrl, "loadFiles", encodeURIComponent(id)].join("/"));
+        }
+
         function openFile(id, type) {
-          return _httpGet([baseUrl, "loadFile"].join("/")+"?id="+id+"&type="+type);
+          return _httpGet([baseUrl, "loadFile", encodeURIComponent(id), type].join("/"));
         }
 
         function getRecentFiles() {
           return _httpGet([baseUrl, "recentFiles"].join("/"));
+        }
+
+        function rename(id, name, path, type) {
+          return _httpPost([baseUrl, "rename", encodeURIComponent(id), encodeURIComponent(path), name, type].join("/"));
+        }
+
+        function create(parent, name) {
+          return _httpPost([baseUrl, "create", encodeURIComponent(parent), name].join("/"), null);
+        }
+
+        function remove(id, type) {
+          return _httpDelete([baseUrl, "remove", encodeURIComponent(id), type].join("/"));
         }
 
         /**

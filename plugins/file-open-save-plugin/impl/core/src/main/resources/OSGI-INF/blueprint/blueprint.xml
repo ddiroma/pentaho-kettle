@@ -33,4 +33,9 @@
 
   </jaxrs:server>
 
+  <bean id="RepositoryOpenExtensionPoint" scope="singleton"
+        class="org.pentaho.repo.extension.RepositoryOpenExtensionPoint">
+    <pen:di-plugin type="org.pentaho.di.core.extension.ExtensionPointPluginType"/>
+  </bean>
+
 </blueprint>
