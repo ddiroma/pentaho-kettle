@@ -9,7 +9,8 @@
     <th>
       <div class="nameHeader">{{::vm.nameHeader}}</div>
       <div class="sortWrapper">
-        <div class="sort"></div>
+        <div class="sort" ng-click="vm.sortFiles()"
+            ng-class="{sortUp : vm.sortState === 1, sortDown : vm.sortState === 2}"></div>
       </div>
     </th>
     <th>

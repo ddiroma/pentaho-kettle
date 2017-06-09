@@ -52,16 +52,22 @@ define([
     vm.selectFile = selectFile;
     vm.commitFile = commitFile;
     vm.rename = rename;
+    vm.sortFiles = sortFiles;
 
     function onInit() {
       vm.nameHeader = "Name";
       vm.typeHeader = "Type";
       vm.lastSaveHeader = "Last saved";
+      vm.sortState = 0;
     }
 
     function onChanges(changes) {
       if (changes.folder) {
         vm.selectedFile = null;
+        vm.sortState = 0
+        if (vm.folder.children) {
+          vm.originalChildrenFiles = JSON.parse(JSON.stringify(vm.folder.children))
+        }
       }
     }
 
@@ -81,6 +87,45 @@ define([
       dt.rename(vm.selectedFile.objectId.id, vm.selectedFile.name, path, vm.selectedFile.type).then(function(response) {
         vm.selectedFile.objectId = response.data;
       });
+    }
+
+    function sortFiles () {
+      switch (vm.sortState) {
+        case 0:
+          vm.sortState = 1
+          vm.folder.children.sort(compareDescend)
+          return
+        case 1:
+          vm.sortState = 2
+          vm.folder.children.sort(compareAscend)
+          return
+        case 2:
+          vm.sortState = 0
+          vm.folder.children = JSON.parse(JSON.stringify(vm.originalChildrenFiles))
+          return
+        default:
+          break
+      }
+    }
+
+    function compareAscend (file1, file2) {
+      if (file1.name.toLowerCase() < file2.name.toLowerCase()) {
+        return -1
+      }
+      if (file1.name.toLowerCase() > file2.name.toLowerCase()) {
+        return 1
+      }
+      return 0
+    }
+
+    function compareDescend (file1, file2) {
+      if (file1.name.toLowerCase() < file2.name.toLowerCase()) {
+        return 1
+      }
+      if (file1.name.toLowerCase() > file2.name.toLowerCase()) {
+        return -1
+      }
+      return 0
     }
   }
 
