@@ -37,6 +37,11 @@ define([
 
   var options = {
     bindings: {
+      errorType: '<',
+      errorFile: '<',
+      errorFolder: '<',
+      onErrorConfirm: '&',
+      onErrorCancel: '&'
     },
     template: errorTemplate,
     controllerAs: "vm",
@@ -46,15 +51,97 @@ define([
   function errorController() {
     var vm = this;
     vm.$onInit = onInit;
+    vm.$onChanges = onChanges;
+    vm.errorCancel = errorCancel;
+    vm.errorConfirm = errorConfirm;
 
     function onInit() {
-      vm.title = "Title";
-      vm.topMessageBefore = "Confirm delete of ";
-      vm.topMessageMiddle = "transformation 1 ";
-      vm.topMessageAfter = "file?";
-      vm.bottomMessage = "Do you want to delete it?";
-      vm.confirmButton = "Yes, delete";
-      vm.cancelButton = "Cancel";
+    }
+
+    function onChanges() {
+      if(vm.errorType !== 0) {
+        setMessages();
+      }
+    }
+
+    function errorCancel() {
+      vm.onErrorCancel();
+    }
+
+    function errorConfirm() {
+      vm.onErrorConfirm();
+    }
+
+    function setMessages() {
+      switch (vm.errorType) {
+        case 1://Overwrite
+            setMessage("Overwrite", "The " + vm.errorFile.type + " ", vm.errorFile.name + " ",
+                "already exists.", "Do you want to overwrite it?",
+                "Yes, overwrite", "Cancel"
+                /*i18n.get("file-open-save-plugin.error.overwrite.title"),
+                vm.errorFile.type === "job" ? i18n.get("file-open-save-plugin.error.overwrite.job.top-before.message") :
+                                     i18n.get("file-open-save-plugin.error.overwrite.trans.top-before.message"),
+                " " + vm.errorFile.name + " ",
+                i18n.get("file-open-save-plugin.error.overwrite.top-after.message"),
+                i18n.get("file-open-save-plugin.error.overwrite.bottom.message"),
+                i18n.get("file-open-save-plugin.error.overwrite.accept.button"),
+                i18n.get("file-open-save-plugin.error.overwrite.cancel.button")*/);
+          break;
+        case 2://Folder Exists
+          setMessage("Folder Exists", "The destination already contains a folder named ",
+              "", "FOLDER", "Please choose a different name.",
+              "", "Close"
+              /*i18n.get("file-open-save-plugin.error.folder-exists.title"),
+               i18n.get("file-open-save-plugin.error.folder-exists.top.message"),
+               " ",
+               vm.errorFolder.name,
+               i18n.get("file-open-save-plugin.error.folder-exists.bottom.message"),
+               "",
+               i18n.get("file-open-save-plugin.error.folder-exists.close.button")*/);
+          break;
+        case 3://Unable to Save
+          setMessage("Unable to Save", "Please contact your administrator for assistance.",
+              "", "", "", "", "Close"
+              /*i18n.get("file-open-save-plugin.error.unable-to-save.title"),
+               i18n.get("file-open-save-plugin.error.unable-to-save.message"),
+               "", "", "", "", i18n.get("file-open-save-plugin.error.unable-to-save.close.button")*/);
+          break;
+        case 4://Unable to create folder
+          setMessage("Unable to create folder", "Please contact your administrator for assistance.",
+              "", "", "", "", "Close"
+              /*i18n.get("file-open-save-plugin.error.unable-to-create-folder.title"),
+               i18n.get("file-open-save-plugin.error.unable-to-create-folder.message"),
+               "", "", "", "", i18n.get("file-open-save-plugin.error.unable-to-create-folder.close.button")*/);
+          break;
+        case 5://Delete file
+          setMessage("Delete file", "Are you sure you want to delete ", vm.errorFile.name, "?", "",
+              "Yes, Delete", "No"
+              /*i18n.get("file-open-save-plugin.error.delete-file.title"),
+               i18n.get("file-open-save-plugin.error.delete-file.message"),
+               vm.errorFile.name, "?", "", i18n.get("file-open-save-plugin.error.delete-file.accept.button"),
+               i18n.get("file-open-save-plugin.error.delete-file.no.button")*/);
+          break;
+        case 6://Delete folder
+          setMessage("Delete folder", "Are you sure you want to delete ", vm.errorFolder.name + " ", "and all of its content?", "",
+              "Yes, Delete", "No"
+              /*i18n.get("file-open-save-plugin.error.delete-folder.title"),
+               i18n.get("file-open-save-plugin.error.delete-folder.before.message") + " ",
+               vm.errorFolder.name + " ", i18n.get("file-open-save-plugin.error.delete-folder.after.message"),
+               "", i18n.get("file-open-save-plugin.error.delete-folder.accept.button"),
+               i18n.get("file-open-save-plugin.error.delete-folder.no.button")*/);
+          break;
+        default:
+          setMessage("","","","","","","");
+          break;
+      }
+    }
+
+    function setMessage(title, topBefore, topMiddle, topAfter, bottom, confirm, cancel) {
+      vm.errorTitle = title;
+      vm.errorMessageTop = topBefore + topMiddle + topAfter;
+      vm.errorMessageBottom = bottom;
+      vm.errorConfirmButton = confirm;
+      vm.errorCancelButton = cancel;
     }
   }
 
