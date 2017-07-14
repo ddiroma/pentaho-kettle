@@ -44,7 +44,7 @@ public class RepositoryBrowserEndpoint {
   public RepositoryBrowserEndpoint( RepositoryBrowserController repositoryBrowserController ) {
     this.repositoryBrowserController = repositoryBrowserController;
   }
-
+  
   @GET
   @Path( "/loadDirectoryTree" )
   @Produces( { MediaType.APPLICATION_JSON } )
