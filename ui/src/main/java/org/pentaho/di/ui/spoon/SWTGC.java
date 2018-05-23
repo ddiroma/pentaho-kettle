@@ -408,17 +408,23 @@ public class SWTGC implements GCInterface {
 
   public void drawStepIcon( int x, int y, StepMeta stepMeta, float magnification ) {
     String steptype = stepMeta.getStepID();
+    boolean isDeprecated = stepMeta.isDeprecated();
     Image im = null;
     if ( stepMeta.isMissing() ) {
       im = GUIResource.getInstance().getImageMissing();
+    } else if ( isDeprecated ) {
+      im = GUIResource.getInstance().getImageDeprecated();
     } else {
-      im =
-          images.get( steptype ).getAsBitmapForSize( gc.getDevice(), Math.round( iconsize * magnification ),
+      im = images.get( steptype ).getAsBitmapForSize( gc.getDevice(), Math.round( iconsize * magnification ),
               Math.round( iconsize * magnification ) );
     }
     if ( im != null ) { // Draw the icon!
       org.eclipse.swt.graphics.Rectangle bounds = im.getBounds();
-      gc.drawImage( im, 0, 0, bounds.width, bounds.height, x, y, iconsize, iconsize );
+      if ( isDeprecated ) {
+        gc.drawImage( im, 0, 0, bounds.width, bounds.height, x + 4, y + 4, iconsize - 8, iconsize - 8 );
+      } else {
+        gc.drawImage( im, 0, 0, bounds.width, bounds.height, x, y, iconsize, iconsize );
+      }
     }
   }
 

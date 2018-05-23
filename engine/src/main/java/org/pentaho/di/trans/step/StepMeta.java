@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -22,12 +22,14 @@
 
 package org.pentaho.di.trans.step;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.pentaho.di.base.BaseMeta;
 import org.pentaho.di.cluster.ClusterSchema;
 import org.pentaho.di.core.AttributesInterface;
@@ -281,8 +283,8 @@ public class StepMeta extends SharedObjectBase implements Cloneable, Comparable<
    *          The XML step node.
    * @param databases
    *          A list of databases
-   * @param counters
-   *          A map with all defined counters.
+   * @param metaStore
+   *          The IMetaStore
    *
    */
   public StepMeta( Node stepnode, List<DatabaseMeta> databases, IMetaStore metaStore ) throws KettleXMLException,
@@ -1143,5 +1145,19 @@ public class StepMeta extends SharedObjectBase implements Cloneable, Comparable<
 
   public boolean isMissing() {
     return this.stepMetaInterface instanceof MissingTrans;
+  }
+
+  public boolean isDeprecated() {
+    PluginRegistry registry = PluginRegistry.getInstance();
+    final List<PluginInterface> deprecatedSteps = registry.getPluginsByCategory( StepPluginType.class,
+      BaseMessages.getString( PKG, "BaseStep.Category.Deprecated" ) );
+    String stepID = getStepID();
+    for ( PluginInterface p : deprecatedSteps ) {
+      String[] ids = p.getIds();
+      if ( !ArrayUtils.isEmpty( ids ) && ids[0].equals( stepID ) ) {
+        return true;
+      }
+    }
+    return false;
   }
 }

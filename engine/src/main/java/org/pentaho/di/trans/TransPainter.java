@@ -558,6 +558,7 @@ public class TransPainter extends BasePainter<TransHopMeta, StepMeta> {
     if ( stepMeta == null ) {
       return;
     }
+    boolean isDeprecated = stepMeta.isDeprecated();
     int alpha = gc.getAlpha();
 
     StepIOMetaInterface ioMeta = stepMeta.getStepMetaInterface().getStepIOMeta();
@@ -706,6 +707,11 @@ public class TransPainter extends BasePainter<TransHopMeta, StepMeta> {
 
     String name = stepMeta.getName();
 
+    if ( isDeprecated ) {
+      String deprecatedStr = BaseMessages.getString( stepMeta.getClass(), "BaseStep.Category.Deprecated" );
+      name = name + " (" + deprecatedStr.toLowerCase() + ") ";
+    }
+
     if ( stepMeta.isSelected() ) {
       gc.setLineWidth( linewidth + 2 );
     } else {
@@ -722,11 +728,17 @@ public class TransPainter extends BasePainter<TransHopMeta, StepMeta> {
     gc.drawStepIcon( x, y, stepMeta, magnification );
     if ( stepError || stepMeta.isMissing() ) {
       gc.setForeground( EColor.RED );
+    } else if ( isDeprecated ){
+      gc.setForeground( 246, 196, 56 );
     } else {
       gc.setForeground( EColor.CRYSTAL );
     }
     if ( stepMeta.isSelected() ) {
-      gc.setForeground( 0, 93, 166 );
+      if ( isDeprecated ) {
+       gc.setForeground( 246, 196, 56 );
+      } else {
+        gc.setForeground(0, 93, 166);
+      }
     }
     gc.drawRoundRectangle( x - 1, y - 1, iconsize + 1, iconsize + 1, 8, 8 );
 
