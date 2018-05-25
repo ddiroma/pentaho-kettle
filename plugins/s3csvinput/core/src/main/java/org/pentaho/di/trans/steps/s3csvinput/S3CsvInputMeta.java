@@ -722,26 +722,18 @@ public class S3CsvInputMeta extends BaseStepMeta implements StepMetaInterface, I
     this.awsSecretKey = awsSecretKey;
   }
 
-  public AmazonS3 getS3Client( VariableSpace space ) throws SdkClientException {
+  public S3Service getS3Service( VariableSpace space ) throws S3ServiceException {
     String accessKey = Encr.decryptPasswordOptionallyEncrypted( space.environmentSubstitute( awsAccessKey ) );
     String secretKey = Encr.decryptPasswordOptionallyEncrypted( space.environmentSubstitute( awsSecretKey ) );
     AWSCredentials credentials = null;
 
-    if ( !isEmpty( accessKey ) && !isEmpty( secretKey ) ) {
-      // Handle legacy credentials ( embedded in the step ).  We'll force a region since it not specified and
-      // then turn on GlobalBucketAccess so if the files accessed are elsewhere it won't matter.
-      BasicAWSCredentials awsCreds = new BasicAWSCredentials( accessKey, secretKey );
-      return AmazonS3ClientBuilder.standard()
-        .withCredentials( new AWSStaticCredentialsProvider( awsCreds ) )
-        .enableForceGlobalBucketAccess()
-        .withRegion( Regions.US_EAST_1 )
-        .build();
+    if ( isEmpty( accessKey ) && isEmpty( secretKey ) ) {
+      com.amazonaws.auth.AWSCredentials defaultCredentials = DefaultAWSCredentialsProviderChain.getInstance().getCredentials();
+      credentials = new AWSCredentials( defaultCredentials.getAWSAccessKeyId(), defaultCredentials.getAWSSecretKey() );
     } else {
-      // Get Credentials the new way
-      return AmazonS3ClientBuilder.standard()
-        .enableForceGlobalBucketAccess()
-        .build();
+      credentials = new AWSCredentials( accessKey, secretKey );
     }
+    return new RestS3Service( credentials );
   }
 
   private boolean isEmpty( String value ) {
