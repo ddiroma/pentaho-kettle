@@ -707,11 +707,6 @@ public class TransPainter extends BasePainter<TransHopMeta, StepMeta> {
 
     String name = stepMeta.getName();
 
-    if ( isDeprecated ) {
-      String deprecatedStr = BaseMessages.getString( stepMeta.getClass(), "BaseStep.Category.Deprecated" );
-      name = name + " (" + deprecatedStr.toLowerCase() + ") ";
-    }
-
     if ( stepMeta.isSelected() ) {
       gc.setLineWidth( linewidth + 2 );
     } else {
