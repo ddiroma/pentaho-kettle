@@ -325,8 +325,6 @@ public class GUIResource {
 
   private Image imageVersionBrowser;
 
-  private SwtUniversalImage imageDeprecatedSwt;
-
   private Image imageDeprecated;
 
   private Image imageNew;
@@ -636,7 +634,6 @@ public class GUIResource {
       imageWarning.dispose();
       imageVersionBrowser.dispose();
       imageClearText.dispose();
-      imageDeprecatedSwt.dispose();
       imageDeprecated.dispose();
       imageClearTextDisabled.dispose();
       imageExpandAll.dispose();
@@ -1081,9 +1078,6 @@ public class GUIResource {
     imageWarning = SwtSvgImageUtil.getImageAsResource( display, BasePropertyHandler.getProperty( "Warning_image" ) );
 
     // "ui/images/deprecated.svg
-    imageDeprecatedSwt =
-      SwtSvgImageUtil.getImageAsResource( display, BasePropertyHandler.getProperty( "Deprecated_image" ) );
-
     imageDeprecated = loadAsResource( display, BasePropertyHandler.getProperty( "Deprecated_image" ),
       ConstUI.LARGE_ICON_SIZE );
 
@@ -2369,10 +2363,6 @@ public class GUIResource {
 
   public Image getImageVersionBrowser() {
     return imageVersionBrowser;
-  }
-
-  public SwtUniversalImage getimageDeprecatedSwt() {
-    return imageDeprecatedSwt;
   }
 
   public Image getImageDeprecated() {
