@@ -485,6 +485,7 @@ public class SelectValuesDialog extends BaseStepDialog implements StepDialogInte
     // ///////////////////////////////////////////////////////////
 
     fdTabFolder = new FormData();
+    fdTabFolder.width = 750;
     fdTabFolder.left = new FormAttachment( 0, 0 );
     fdTabFolder.top = new FormAttachment( wStepname, margin );
     fdTabFolder.right = new FormAttachment( 100, 0 );
