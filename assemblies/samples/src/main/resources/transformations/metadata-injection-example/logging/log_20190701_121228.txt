@@ -1,0 +1,39 @@
+ExecutionTime;ExecutionResult;ExecutionNrErrors;ExecutionLinesRead;ExecutionLinesWritten;ExecutionLinesInput;ExecutionLinesOutput;ExecutionLinesRejected;ExecutionLinesUpdated;ExecutionLinesDeleted;ExecutionFilesRetrieved;ExecutionExitStatus;ExecutionLogText;ExecutionLogChannelId
+917;Y;0;0;0;0;0;0;0;0;0;0;2019/07/01 12:12:28 - 02_process_supplier - Dispatching started for transformation [02_process_supplier]
+2019/07/01 12:12:28 - Get rows from result: supplier.0 - Finished processing (I=0, O=0, R=1, W=2, U=0, E=0)
+2019/07/01 12:12:28 - Wildcards.0 - Finished processing (I=0, O=0, R=1, W=1, U=0, E=0)
+2019/07/01 12:12:28 - Get File Names.0 - Finished processing (I=0, O=0, R=1, W=1, U=0, E=0)
+2019/07/01 12:12:28 - metadata_target.xlsx.0 - Finished processing (I=7, O=0, R=0, W=7, U=0, E=0)
+2019/07/01 12:12:28 - metadata_suppliers.xlsx.0 - Finished processing (I=17, O=0, R=0, W=17, U=0, E=0)
+2019/07/01 12:12:28 - Join supplier metadata.0 - Finished processing (I=0, O=0, R=18, W=9, U=0, E=0)
+2019/07/01 12:12:29 - 03_process_supplier_file - Dispatching started for transformation [03_process_supplier_file]
+2019/07/01 12:12:29 - Microsoft Excel Input.0 - Finished processing (I=2, O=0, R=0, W=2, U=0, E=0)
+2019/07/01 12:12:29 - Select values.0 - Finished processing (I=0, O=0, R=2, W=2, U=0, E=0)
+2019/07/01 12:12:29 - Get ${supplier} Variable.0 - Finished processing (I=0, O=0, R=2, W=2, U=0, E=0)
+2019/07/01 12:12:29 - Text file output.0 - Finished processing (I=0, O=2, R=2, W=2, U=0, E=0)
+;127aec6e-f4e5-4210-b8df-b83d5896f2d6              
+1065;Y;0;0;0;0;0;0;0;0;0;0;2019/07/01 12:12:28 - 02_process_supplier - Dispatching started for transformation [02_process_supplier]
+2019/07/01 12:12:28 - Get rows from result: supplier.0 - Finished processing (I=0, O=0, R=1, W=2, U=0, E=0)
+2019/07/01 12:12:28 - Wildcards.0 - Finished processing (I=0, O=0, R=1, W=1, U=0, E=0)
+2019/07/01 12:12:28 - Get File Names.0 - Finished processing (I=0, O=0, R=1, W=1, U=0, E=0)
+2019/07/01 12:12:28 - metadata_target.xlsx.0 - Finished processing (I=7, O=0, R=0, W=7, U=0, E=0)
+2019/07/01 12:12:28 - metadata_suppliers.xlsx.0 - Finished processing (I=17, O=0, R=0, W=17, U=0, E=0)
+2019/07/01 12:12:28 - Join supplier metadata.0 - Finished processing (I=0, O=0, R=18, W=9, U=0, E=0)
+2019/07/01 12:12:29 - 03_process_supplier_file - Dispatching started for transformation [03_process_supplier_file]
+2019/07/01 12:12:29 - Microsoft Excel Input.0 - Finished processing (I=2, O=0, R=0, W=2, U=0, E=0)
+2019/07/01 12:12:29 - Select values.0 - Finished processing (I=0, O=0, R=2, W=2, U=0, E=0)
+2019/07/01 12:12:29 - Get ${supplier} Variable.0 - Finished processing (I=0, O=0, R=2, W=2, U=0, E=0)
+2019/07/01 12:12:29 - Text file output.0 - Finished processing (I=0, O=2, R=2, W=2, U=0, E=0)
+2019/07/01 12:12:29 - 02_process_supplier - Dispatching started for transformation [02_process_supplier]
+2019/07/01 12:12:29 - Get rows from result: supplier.0 - Finished processing (I=0, O=0, R=1, W=2, U=0, E=0)
+2019/07/01 12:12:29 - Wildcards.0 - Finished processing (I=0, O=0, R=1, W=1, U=0, E=0)
+2019/07/01 12:12:29 - Get File Names.0 - Finished processing (I=0, O=0, R=1, W=1, U=0, E=0)
+2019/07/01 12:12:29 - metadata_target.xlsx.0 - Finished processing (I=7, O=0, R=0, W=7, U=0, E=0)
+2019/07/01 12:12:29 - metadata_suppliers.xlsx.0 - Finished processing (I=17, O=0, R=0, W=17, U=0, E=0)
+2019/07/01 12:12:29 - Join supplier metadata.0 - Finished processing (I=0, O=0, R=18, W=8, U=0, E=0)
+2019/07/01 12:12:29 - 03_process_supplier_file - Dispatching started for transformation [03_process_supplier_file]
+2019/07/01 12:12:30 - Microsoft Excel Input.0 - Finished processing (I=3, O=0, R=0, W=3, U=0, E=0)
+2019/07/01 12:12:30 - Select values.0 - Finished processing (I=0, O=0, R=3, W=3, U=0, E=0)
+2019/07/01 12:12:30 - Get ${supplier} Variable.0 - Finished processing (I=0, O=0, R=3, W=3, U=0, E=0)
+2019/07/01 12:12:30 - Text file output.0 - Finished processing (I=0, O=3, R=3, W=3, U=0, E=0)
+;127aec6e-f4e5-4210-b8df-b83d5896f2d6              

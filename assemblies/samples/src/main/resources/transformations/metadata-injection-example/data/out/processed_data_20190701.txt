@@ -1,0 +1,5 @@
+supplier1;data_format_a.xlsx;2;2016-01-26;9406;62.69;EUR
+supplier1;data_format_a.xlsx;3;2016-01-26;9407;54.63;EUR
+supplier2;data_format_b.xlsx;2;2016-01-26;3711;47.11;EUR
+supplier2;data_format_b.xlsx;3;2016-01-26;3712;4.95;EUR
+supplier2;data_format_b.xlsx;4;2016-01-26;3713;80.98;EUR
