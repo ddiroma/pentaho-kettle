@@ -144,6 +144,7 @@ define([
       vm.tree = [
         {name: "Recents", hasChildren: false, provider: "recents", order: 0}
       ];
+      vm.providerFilter = $location.search().providerFilter;
       folderService.folder = vm.tree[0];
       _update();
       vm.selectedFolder = "";
@@ -151,7 +152,7 @@ define([
         var state = $state.current.name;
         vm.headerTitle = i18n.get("file-open-save-plugin.app.header." + state + ".title");
         if (!$state.is('selectFolder')) {
-          dt.getDirectoryTree(undefined).then(function(response) {
+          dt.getDirectoryTree(vm.providerFilter).then(function(response) {
             _populateTree(response);
             _init();
           });
