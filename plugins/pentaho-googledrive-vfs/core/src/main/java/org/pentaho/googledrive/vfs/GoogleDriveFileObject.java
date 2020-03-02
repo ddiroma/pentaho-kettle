@@ -96,7 +96,8 @@ public class GoogleDriveFileObject extends AbstractFileObject {
     if ( isFolder() ) {
       id = id == null ? "root" : id;
       String fileQuery = "'" + id + "' in parents and trashed=false";
-      FileList files = driveService.files().list().setQ( fileQuery ).execute();
+      FileList files = driveService.files().list().setSupportsTeamDrives( true )
+        .setIncludeTeamDriveItems( true ).setQ( fileQuery ).execute();
       List<String> fileNames = new ArrayList<String>();
       for ( File file : files.getFiles() ) {
         fileNames.add( file.getName() );
@@ -194,7 +195,8 @@ public class GoogleDriveFileObject extends AbstractFileObject {
     if ( parentId != null ) {
       fileQuery.append( " and '" + parentId + "' in parents and trashed=false" );
     }
-    FileList fileList = driveService.files().list().setQ( fileQuery.toString() ).execute();
+    FileList fileList = driveService.files().list().setSupportsTeamDrives( true )
+      .setIncludeTeamDriveItems( true ).setQ( fileQuery.toString() ).execute();
     if ( !fileList.getFiles().isEmpty() ) {
       file = fileList.getFiles().get( 0 );
     }
