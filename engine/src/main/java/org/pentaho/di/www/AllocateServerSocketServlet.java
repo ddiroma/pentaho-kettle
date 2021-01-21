@@ -204,7 +204,7 @@ public class AllocateServerSocketServlet extends BaseHttpServlet implements Cart
   */
   public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
     IOException {
-    if ( isJettyMode() && !request.getContextPath().startsWith( CONTEXT_PATH ) ) {
+    if ( isJettyMode() && !request.getContextPath().startsWith( CONTEXT_PATH ) || !isAdmin() ) {
       return;
     }
 

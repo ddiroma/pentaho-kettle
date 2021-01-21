@@ -152,7 +152,7 @@ public class AddTransServlet extends BaseHttpServlet implements CartePluginInter
   */
   public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
     IOException {
-    if ( isJettyMode() && !request.getRequestURI().startsWith( CONTEXT_PATH ) ) {
+    if ( isJettyMode() && !request.getRequestURI().startsWith( CONTEXT_PATH ) || !isAdmin() ) {
       return;
     }
 

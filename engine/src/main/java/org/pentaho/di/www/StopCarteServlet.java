@@ -59,7 +59,7 @@ public class StopCarteServlet extends BaseHttpServlet implements CartePluginInte
 
   @Override
   public void doGet( HttpServletRequest request, HttpServletResponse response ) throws IOException {
-    if ( isJettyMode() && !request.getContextPath().startsWith( CONTEXT_PATH ) ) {
+    if ( isJettyMode() && !request.getContextPath().startsWith( CONTEXT_PATH ) || !isAdmin() ) {
       return;
     }
 

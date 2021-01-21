@@ -45,12 +45,12 @@ public class GetRootServlet extends BaseHttpServlet implements CartePluginInterf
     <a name="GET"></a>
     <h2>GET</h2>
     <p>Display initial Carte page.</p>
-    
+
     <p><b>Example Request:</b><br />
     <pre function="syntax.xml">
     GET /
     </pre>
-    
+
     </p>
 
   <h3>Response Body</h3>
@@ -84,7 +84,7 @@ public class GetRootServlet extends BaseHttpServlet implements CartePluginInterf
     </HTML>
 
     </pre>
-    
+
     <h3>Status Codes</h3>
     <table class="pentaho-table">
   <tbody>
@@ -106,7 +106,7 @@ public class GetRootServlet extends BaseHttpServlet implements CartePluginInterf
   */
   public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
     IOException {
-    if ( isJettyMode() && !request.getRequestURI().equals( CONTEXT_PATH ) ) {
+    if ( isJettyMode() && !request.getRequestURI().equals( CONTEXT_PATH ) || !isAdmin() ) {
       response.sendError( HttpServletResponse.SC_NOT_FOUND );
       return;
     }

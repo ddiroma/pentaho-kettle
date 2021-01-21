@@ -57,12 +57,12 @@ public class ListServerSocketServlet extends BaseHttpServlet implements CartePlu
     <p>Gets list of ports for specified host.
   Method is used for listing all or just open ports for specified host. Response contains port number,
   which transformation it is (was) used for, current status of the port and last date time used.</p>
-    
+
     <p><b>Example Request:</b><br />
     <pre function="syntax.xml">
     GET /kettle/listSocket/?host=127.0.0.1
     </pre>
-    
+
     </p>
     <h3>Parameters</h3>
     <table class="pentaho-table">
@@ -85,7 +85,7 @@ public class ListServerSocketServlet extends BaseHttpServlet implements CartePlu
     </tr>
     </tbody>
     </table>
-  
+
   <h3>Response Body</h3>
 
   <table class="pentaho-table">
@@ -101,7 +101,7 @@ public class ListServerSocketServlet extends BaseHttpServlet implements CartePlu
     </tbody>
   </table>
     <p>Response is HTML document listing the ports requested.</p>
-    
+
     <p><b>Example Response:</b></p>
   <pre function="syntax.xml">
   <HTML>
@@ -160,7 +160,7 @@ public class ListServerSocketServlet extends BaseHttpServlet implements CartePlu
   */
   public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
     IOException {
-    if ( isJettyMode() && !request.getContextPath().startsWith( CONTEXT_PATH ) ) {
+    if ( isJettyMode() && !request.getContextPath().startsWith( CONTEXT_PATH ) || !isAdmin() ) {
       return;
     }
 

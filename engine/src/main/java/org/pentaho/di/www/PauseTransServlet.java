@@ -138,7 +138,7 @@ public class PauseTransServlet extends BaseHttpServlet implements CartePluginInt
   */
   public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
     IOException {
-    if ( isJettyMode() && !request.getContextPath().startsWith( CONTEXT_PATH ) ) {
+    if ( isJettyMode() && !request.getContextPath().startsWith( CONTEXT_PATH ) || !isAdmin() ) {
       return;
     }
 

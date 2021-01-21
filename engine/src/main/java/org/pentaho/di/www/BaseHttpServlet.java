@@ -188,4 +188,18 @@ public class BaseHttpServlet extends HttpServlet {
     this.detections = detections;
   }
 
+  public boolean isAdmin() {
+    try {
+      return transformationMap.getSlaveServerConfig().getRepository().getUserInfo().isAdmin();
+    } catch ( Exception e ) {
+      // do nothing...try jobMap
+    }
+    try {
+      return jobMap.getSlaveServerConfig().getRepository().getUserInfo().isAdmin();
+    } catch ( Exception e ) {
+      // do nothing...just return false
+    }
+    return false;
+  }
+
 }

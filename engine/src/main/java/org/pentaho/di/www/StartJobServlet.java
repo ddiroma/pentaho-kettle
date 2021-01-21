@@ -71,12 +71,12 @@ public class StartJobServlet extends BaseHttpServlet implements CartePluginInter
       <a name="GET"></a>
       <h2>GET</h2>
       <p>Starts the job. If the job cannot be started, an error is returned.</p>
-      
+
       <p><b>Example Request:</b><br />
       <pre function="syntax.xml">
       GET /kettle/startJob/?name=dummy_job&xml=Y
       </pre>
-      
+
       </p>
       <h3>Parameters</h3>
       <table class="pentaho-table">
@@ -103,7 +103,7 @@ public class StartJobServlet extends BaseHttpServlet implements CartePluginInter
       </tr>
       </tbody>
       </table>
-    
+
     <h3>Response Body</h3>
 
     <table class="pentaho-table">
@@ -120,7 +120,7 @@ public class StartJobServlet extends BaseHttpServlet implements CartePluginInter
     </table>
       <p>Response XML or HTML containing operation result. When using xml=Y <code>result</code> field indicates whether
     operation was successful (<code>OK</code>) or not (<code>ERROR</code>).</p>
-          
+
       <p><b>Example Response:</b></p>
     <pre function="syntax.xml">
     <?xml version="1.0" encoding="UTF-8"?>
@@ -160,7 +160,7 @@ public class StartJobServlet extends BaseHttpServlet implements CartePluginInter
     */
   public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
     IOException {
-    if ( isJettyMode() && !request.getContextPath().startsWith( CONTEXT_PATH ) ) {
+    if ( isJettyMode() && !request.getContextPath().startsWith( CONTEXT_PATH ) || !isAdmin() ) {
       return;
     }
 

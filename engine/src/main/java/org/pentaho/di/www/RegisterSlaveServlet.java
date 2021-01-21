@@ -115,7 +115,7 @@ if an error occurred. Response has <code>result</code> OK if there were no error
 */
   public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
     IOException {
-    if ( isJettyMode() && !request.getRequestURI().startsWith( CONTEXT_PATH ) ) {
+    if ( isJettyMode() && !request.getRequestURI().startsWith( CONTEXT_PATH ) || !isAdmin() ) {
       return;
     }
 

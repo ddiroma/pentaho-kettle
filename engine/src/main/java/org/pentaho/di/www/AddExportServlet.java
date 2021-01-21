@@ -89,11 +89,11 @@ public class AddExportServlet extends BaseHttpServlet implements CartePluginInte
     Uploads zip file containing job or transformation to be executed and executes it.
     Method relies on the input parameters to find the entity to be executed. The archive is
     transferred within request body.
-    
-    <code>File url of the executed entity </code> will be returned in the Response object 
-    or <code>message</code> describing error occurred. To determine if the call is successful  
+
+    <code>File url of the executed entity </code> will be returned in the Response object
+    or <code>message</code> describing error occurred. To determine if the call is successful
     rely on <code>result</code> parameter in response.</p>
-    
+
     <p><b>Example Request:</b><br />
     <pre function="syntax.xml">
     POST /kettle/addExport/?type=job&load=dummy_job.kjb
@@ -120,7 +120,7 @@ public class AddExportServlet extends BaseHttpServlet implements CartePluginInte
     </tr>
     </tbody>
     </table>
-  
+
   <h3>Response Body</h3>
 
   <table class="pentaho-table">
@@ -137,7 +137,7 @@ public class AddExportServlet extends BaseHttpServlet implements CartePluginInte
   </table>
     <p>Response wraps file url of the entity that was executed or error stack trace if an error occurred.
      Response has <code>result</code> OK if there were no errors. Otherwise it returns ERROR.</p>
-    
+
     <p><b>Example Response:</b></p>
     <pre function="syntax.xml">
     <?xml version="1.0" encoding="UTF-8"?>
@@ -147,7 +147,7 @@ public class AddExportServlet extends BaseHttpServlet implements CartePluginInte
       <id>74cf4219-c881-4633-a71a-2ed16b7db7b8</id>
     </webresult>
     </pre>
-    
+
     <h3>Status Codes</h3>
     <table class="pentaho-table">
   <tbody>
@@ -172,7 +172,7 @@ public class AddExportServlet extends BaseHttpServlet implements CartePluginInte
 
   public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
     IOException {
-    if ( isJettyMode() && !request.getRequestURI().startsWith( CONTEXT_PATH ) ) {
+    if ( isJettyMode() && !request.getRequestURI().startsWith( CONTEXT_PATH ) || !isAdmin() ) {
       return;
     }
 

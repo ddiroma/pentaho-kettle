@@ -72,20 +72,20 @@ public class AddJobServlet extends BaseHttpServlet implements CartePluginInterfa
     <a name="POST"></a>
     <h2>POST</h2>
     <p>Uploads and executes job configuration XML file.
-  Uploads xml file containing job and job_execution_configuration (wrapped in job_configuration tag) 
-  to be executed and executes it. Method relies on the input parameter to determine if xml or html 
+  Uploads xml file containing job and job_execution_configuration (wrapped in job_configuration tag)
+  to be executed and executes it. Method relies on the input parameter to determine if xml or html
   reply should be produced. The job_configuration xml is
   transferred within request body.
-  
-  <code>Job name of the executed job </code> will be returned in the Response object 
-  or <code>message</code> describing error occurred. To determine if the call successful or not you should 
+
+  <code>Job name of the executed job </code> will be returned in the Response object
+  or <code>message</code> describing error occurred. To determine if the call successful or not you should
   rely on <code>result</code> parameter in response.</p>
-    
+
     <p><b>Example Request:</b><br />
     <pre function="syntax.xml">
     POST /kettle/addJob/?xml=Y
     </pre>
-    <p>Request body should contain xml containing job_configuration (job + job_execution_configuration 
+    <p>Request body should contain xml containing job_configuration (job + job_execution_configuration
   wrapped in job_configuration tag).</p>
     </p>
     <h3>Parameters</h3>
@@ -98,13 +98,13 @@ public class AddJobServlet extends BaseHttpServlet implements CartePluginInterfa
     </tr>
     <tr>
     <td>xml</td>
-    <td>Boolean flag set to either <code>Y</code> or <code>N</code> describing if xml or html reply 
+    <td>Boolean flag set to either <code>Y</code> or <code>N</code> describing if xml or html reply
   should be produced.</td>
     <td>boolean, optional</td>
     </tr>
     </tbody>
     </table>
-  
+
   <h3>Response Body</h3>
 
   <table class="pentaho-table">
@@ -121,7 +121,7 @@ public class AddJobServlet extends BaseHttpServlet implements CartePluginInterfa
   </table>
     <p>Response wraps job name that was executed or error stack trace
   if an error occurred. Response has <code>result</code> OK if there were no errors. Otherwise it returns ERROR.</p>
-    
+
     <p><b>Example Response:</b></p>
     <pre function="syntax.xml">
     <?xml version="1.0" encoding="UTF-8"?>
@@ -131,7 +131,7 @@ public class AddJobServlet extends BaseHttpServlet implements CartePluginInterfa
       <id>1e90eca8-4d4c-47f7-8e5c-99ec36525e7c</id>
     </webresult>
     </pre>
-    
+
     <h3>Status Codes</h3>
     <table class="pentaho-table">
   <tbody>
@@ -153,7 +153,7 @@ public class AddJobServlet extends BaseHttpServlet implements CartePluginInterfa
   */
   public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
     IOException {
-    if ( isJettyMode() && !request.getRequestURI().startsWith( CONTEXT_PATH ) ) {
+    if ( isJettyMode() && !request.getRequestURI().startsWith( CONTEXT_PATH ) || !isAdmin() ) {
       return;
     }
 
