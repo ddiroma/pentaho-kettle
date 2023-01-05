@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2023 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -62,6 +62,7 @@ import org.pentaho.di.trans.step.BaseStepMeta;
 import org.pentaho.di.trans.step.StepDialogInterface;
 import org.pentaho.di.trans.step.StepMeta;
 import org.pentaho.di.trans.steps.delete.DeleteMeta;
+import org.pentaho.di.trans.steps.delete.DeleteMeta.KeyFields;
 import org.pentaho.di.ui.core.database.dialog.DatabaseExplorerDialog;
 import org.pentaho.di.ui.core.dialog.EnterSelectionDialog;
 import org.pentaho.di.ui.core.dialog.ErrorDialog;
@@ -261,7 +262,7 @@ public class DeleteDialog extends BaseStepDialog implements StepDialogInterface 
     wlKey.setLayoutData( fdlKey );
 
     int nrKeyCols = 4;
-    int nrKeyRows = ( input.getKeyStream() != null ? input.getKeyStream().length : 1 );
+    int nrKeyRows = ( input.getKeyFields() != null ? input.getKeyFields().length : 1 );
 
     ciKey = new ColumnInfo[nrKeyCols];
     ciKey[0] =
@@ -424,21 +425,22 @@ public class DeleteDialog extends BaseStepDialog implements StepDialogInterface 
     }
 
     wCommit.setText( input.getCommitSizeVar() );
+    KeyFields[] keyFields = input.getKeyFields();
 
-    if ( input.getKeyStream() != null ) {
-      for ( int i = 0; i < input.getKeyStream().length; i++ ) {
+    if ( keyFields != null && keyFields.length > 0 && keyFields[0].getKeyStream() != null ) {
+      for ( int i = 0; i < keyFields.length; i++ ) {
         TableItem item = wKey.table.getItem( i );
-        if ( input.getKeyLookup()[i] != null ) {
-          item.setText( 1, input.getKeyLookup()[i] );
+        if ( keyFields[i].getKeyLookup() != null ) {
+          item.setText( 1, keyFields[i].getKeyLookup() );
         }
-        if ( input.getKeyCondition()[i] != null ) {
-          item.setText( 2, input.getKeyCondition()[i] );
+        if ( keyFields[i].getKeyCondition() != null ) {
+          item.setText( 2, keyFields[i].getKeyCondition() );
         }
-        if ( input.getKeyStream()[i] != null ) {
-          item.setText( 3, input.getKeyStream()[i] );
+        if ( keyFields[i].getKeyStream() != null ) {
+          item.setText( 3, keyFields[i].getKeyStream() );
         }
-        if ( input.getKeyStream2()[i] != null ) {
-          item.setText( 4, input.getKeyStream2()[i] );
+        if ( keyFields[i].getKeyStream2() != null ) {
+          item.setText( 4, keyFields[i].getKeyStream2() );
         }
       }
     }
@@ -536,10 +538,10 @@ public class DeleteDialog extends BaseStepDialog implements StepDialogInterface 
     //CHECKSTYLE:Indentation:OFF
     for ( int i = 0; i < nrkeys; i++ ) {
       TableItem item = wKey.getNonEmpty( i );
-      inf.getKeyLookup()[i] = item.getText( 1 );
-      inf.getKeyCondition()[i] = item.getText( 2 );
-      inf.getKeyStream()[i] = item.getText( 3 );
-      inf.getKeyStream2()[i] = item.getText( 4 );
+      inf.getKeyFields()[i].setKeyLookup( item.getText( 1 ) );
+      inf.getKeyFields()[i].setKeyCondition( item.getText( 2 ) );
+      inf.getKeyFields()[i].setKeyStream( item.getText( 3 ) );
+      inf.getKeyFields()[i].setKeyStream2( item.getText( 4 ) );
     }
 
     inf.setSchemaName( wSchema.getText() );
