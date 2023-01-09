@@ -673,6 +673,7 @@ public class DeleteMeta extends BaseStepMeta implements StepMetaInterface {
   }
 // First commit comment
   // Second commit comment
+  // Third commit comment
   public boolean supportsErrorHandling() {
     return true;
   }
