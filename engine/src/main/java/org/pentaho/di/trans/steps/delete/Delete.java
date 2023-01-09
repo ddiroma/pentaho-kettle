@@ -52,6 +52,7 @@ public class Delete extends BaseStep implements StepInterface {
 
   private DeleteMeta meta;
   private DeleteData data;
+  // Third commit comment
 
   public Delete( StepMeta stepMeta, StepDataInterface stepDataInterface, int copyNr, TransMeta transMeta,
     Trans trans ) {
