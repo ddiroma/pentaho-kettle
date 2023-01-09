@@ -330,7 +330,7 @@ public class DeleteMeta extends BaseStepMeta implements StepMetaInterface {
     int nrkeys = 0;
 
     allocate( nrkeys );
-  }// First commit comment
+  }
 
   public String getXML() {
     StringBuilder retval = new StringBuilder( 500 );
