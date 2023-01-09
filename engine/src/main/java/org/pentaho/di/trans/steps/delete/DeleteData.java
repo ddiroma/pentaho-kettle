@@ -54,5 +54,5 @@ public class DeleteData extends BaseStepData implements StepDataInterface {
 
     db = null;
   }
-  // Second commit comment
+
 }
