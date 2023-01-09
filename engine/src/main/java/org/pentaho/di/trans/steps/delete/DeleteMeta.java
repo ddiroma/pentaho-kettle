@@ -672,6 +672,7 @@ public class DeleteMeta extends BaseStepMeta implements StepMetaInterface {
     this.schemaName = schemaName;
   }
 //First commit comment
+  // Second commit comment
   public boolean supportsErrorHandling() {
     return true;
   }
